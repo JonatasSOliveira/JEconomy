@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_nome_itemcategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:text="@string/nome"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/div_top_itemcategoria"/>
+
+
+    <ImageButton
+        android:id="@+id/btn_edit_itemcategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/div_top_itemcategoria"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/btn_delete_itemcategoria"
+        android:contentDescription="@string/edit"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        app:srcCompat="@drawable/ic_pencil" />
+
+    <ImageButton
+        android:id="@+id/btn_delete_itemcategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/div_top_itemcategoria"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/delete"
+        android:layout_marginEnd="20dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        app:srcCompat="@drawable/ic_trash" />
+
+    <View
+        android:id="@+id/div_top_itemcategoria"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="-1dp"
+        android:background="?android:attr/listDivider"
+        android:visibility="visible" />
+
+    <View
+        android:id="@+id/div_bottom_itemcategoria"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_nome_itemcategoria"
+        android:background="?android:attr/listDivider"
+        android:visibility="visible" />
+</RelativeLayout>
