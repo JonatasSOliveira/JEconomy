@@ -6,11 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.jeconomy.R;
 import com.example.jeconomy.models.Categoria;
 
@@ -20,6 +17,16 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
 
     private List<Categoria> listCategoria;
     private LayoutInflater layoutInflater;
+    private ControlCategoria controlCategoria;
+
+    public void setControlCategoria(ControlCategoria controlCategoria){
+        this.controlCategoria = controlCategoria;
+    }
+
+    public interface ControlCategoria {
+        void deleteCategoria(Categoria categoria);
+        void editCategoria(Categoria categoria);
+    }
 
     public CategoriaAdapter(Context context, List<Categoria> listCategoria ) {
         this.listCategoria = listCategoria;
@@ -30,25 +37,13 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.item_categoria, parent, false);
-        MyViewHolder myViewHolder = new MyViewHolder(view);
+        MyViewHolder myViewHolder = new MyViewHolder(view, controlCategoria);
         return myViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.tvNome.setText(listCategoria.get(position).getNome());
-        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Edit", Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Delete", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -65,12 +60,22 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
         public TextView tvNome;
         public ImageButton btnEdit, btnDelete;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, ControlCategoria categoria) {
             super(itemView);
 
             tvNome = itemView.findViewById(R.id.tv_nome_itemcategoria);
-            btnEdit = itemView.findViewById(R.id.btn_edit_itemcategoria);
             btnDelete = itemView.findViewById(R.id.btn_delete_itemcategoria);
+
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        Categoria categoria = listCategoria.get(position);
+                        controlCategoria.deleteCategoria(categoria);
+                    }
+                }
+            });
         }
     }
 

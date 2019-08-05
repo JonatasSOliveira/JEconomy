@@ -6,22 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".fragments.CategoriaFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_categoria_categoria"
+            android:layout_width="253dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:paddingStart="20dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="15dp"
+            android:text="@string/categoria" />
+
+        <TextView
+            android:id="@+id/tv_edit_categoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="62dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text="@string/editar" />
+
+        <TextView
+            android:id="@+id/tv_delete_categoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="0dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="15dp"
+            android:text="@string/excluir" />
+
+        <Button
+            android:id="@+id/btn_cadastrar_categoria"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/tv_edit_categoria"
+            android:text="@string/mais"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/div_bottom_categoria"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_categoria_categoria"
+            android:background="?android:attr/listDivider" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_categoria_categoria"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:scrollbars="vertical"
+            android:layout_below="@+id/div_bottom_categoria"/>
+    </RelativeLayout>
 </FrameLayout>

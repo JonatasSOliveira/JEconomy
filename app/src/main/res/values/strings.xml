@@ -30,4 +30,7 @@
     <string name="despesa">Despesa</string>
     <string name="edit">edit</string>
     <string name="delete">delete</string>
+    <string name="categoria">Categoria</string>
+    <string name="excluir">Excluir</string>
+    <string name="editar">Editar</string>
 </resources>
