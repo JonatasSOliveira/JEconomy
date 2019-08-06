@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SugarContext.init(MainActivity.this);
-
         tvCadastro = findViewById(R.id.tv_cadastrousuario_login);
         tilLogin = findViewById(R.id.til_login_login);
         tilSenha = findViewById(R.id.til_senha_senha);
@@ -53,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     try {
-                        usuario = new Usuario();
-                        listUsuario= usuario.find(Usuario.class, "login = ?", new String[]{login});
-                        usuario = listUsuario.get(0);
+                        SugarContext.init(MainActivity.this);
+                        usuario =  (Usuario.find(Usuario.class, "login = ?", new String[]{login})).get(0);
+                        SugarContext.terminate();
                         if(!usuario.getSenha().equals(senha)){
                             Toast.makeText(MainActivity.this, "Senha Incorreta", Toast.LENGTH_SHORT).show();
                         }

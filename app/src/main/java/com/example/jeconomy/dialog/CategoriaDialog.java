@@ -4,23 +4,30 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.jeconomy.R;
+import com.example.jeconomy.models.Categoria;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class CategoriaDialog extends AppCompatDialogFragment {
     private TextInputLayout tilCategoria;
+    private Categoria oldCategoria;
     public interface OnInputSelected{
-        void sendInput(String input);
+        void sendInput(String input, Categoria oldCategoria);
     }
     public OnInputSelected onInputSelected;
+
+    public CategoriaDialog(){
+        oldCategoria = null;
+    }
+    public CategoriaDialog(Categoria oldCategoria){
+        this.oldCategoria = oldCategoria;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -36,14 +43,17 @@ public class CategoriaDialog extends AppCompatDialogFragment {
         }).setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String categoria = tilCategoria.getEditText().getText().toString().trim().toUpperCase();
-                if(!categoria.isEmpty()){
-                    onInputSelected.sendInput(categoria);
+                String nome = tilCategoria.getEditText().getText().toString().trim().toUpperCase();
+                if(!nome.isEmpty()){
+                    onInputSelected.sendInput(nome, oldCategoria);
                 }
             }
         });
 
         tilCategoria = view.findViewById(R.id.til_categoria_dialogcategoria);
+        if(oldCategoria != null){
+            tilCategoria.getEditText().setText(oldCategoria.getNome());
+        }
 
         return builder.create();
     }

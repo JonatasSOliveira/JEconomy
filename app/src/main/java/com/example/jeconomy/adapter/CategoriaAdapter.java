@@ -1,6 +1,8 @@
 package com.example.jeconomy.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +67,7 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
 
             tvNome = itemView.findViewById(R.id.tv_nome_itemcategoria);
             btnDelete = itemView.findViewById(R.id.btn_delete_itemcategoria);
+            btnEdit = itemView.findViewById(R.id.btn_edit_itemcategoria);
 
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,7 +75,27 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION){
                         Categoria categoria = listCategoria.get(position);
-                        controlCategoria.deleteCategoria(categoria);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                        builder.setTitle("Realmente deseja excluir: " + categoria.getNome() + "?")
+                                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                controlCategoria.deleteCategoria(listCategoria.get(getAdapterPosition()));
+                            }
+                        }).setNegativeButton("Não", null);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }
+                }
+            });
+
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        Categoria categoria = listCategoria.get(position);
+                        controlCategoria.editCategoria(categoria);
                     }
                 }
             });
