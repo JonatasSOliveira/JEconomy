@@ -21,8 +21,6 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_usuario);
-
-        getSupportActionBar().setTitle("Cadastro: Usuário");
         SugarContext.init(RegisterUsuarioActivity.this);
 
         tilNome = findViewById(R.id.til_nome_cadastrousuario);

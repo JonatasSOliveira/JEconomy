@@ -33,4 +33,5 @@
     <string name="categoria">Categoria</string>
     <string name="excluir">Excluir</string>
     <string name="editar">Editar</string>
+    <string name="cadastro_usu_rio">Cadastro: Usuário</string>
 </resources>
