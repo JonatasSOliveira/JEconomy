@@ -5,31 +5,22 @@ import com.orm.SugarRecord;
 import java.util.Date;
 
 public class Despesa extends SugarRecord {
-
-    private String nome;
     private String formaPag;
     private Date dataPag;
     private Date dataVenc;
     private double preco;
+    private Categoria categoria;
 
     public Despesa(){
 
     }
 
-    public Despesa(String nome, String formaPag, Date dataPag, Date dataVenc, double preco){
-        this.nome = nome;
+    public Despesa(String formaPag, Date dataPag, Date dataVenc, double preco, Categoria categoria) {
         this.formaPag = formaPag;
         this.dataPag = dataPag;
         this.dataVenc = dataVenc;
         this.preco = preco;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+        this.categoria = categoria;
     }
 
     public String getFormaPag() {
@@ -62,5 +53,13 @@ public class Despesa extends SugarRecord {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
