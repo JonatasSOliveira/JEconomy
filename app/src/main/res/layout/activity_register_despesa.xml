@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Cadastro: Despesa"
+        android:text="@string/cadastro_despesa"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
 
     <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -36,16 +36,33 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_cadastrodespesa_registerdespesa"
         app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent">
 
             <Spinner
-                android:id="@+id/sp_categoria"
+                android:id="@+id/sp_categoria_registerdespesa"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"/>
+
+            <Button
+                android:id="@+id/btn_escolherdataven_registerdespesa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ESCOLHER"
+                android:layout_below="@+id/sp_categoria_registerdespesa"/>
+
+            <EditText
+                android:id="@+id/et_dataven_registerdespesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Data de Vencimento"
+                android:layout_toEndOf="@+id/btn_escolherdataven_registerdespesa"
+                android:layout_below="@+id/sp_categoria_registerdespesa"/>
+        </RelativeLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

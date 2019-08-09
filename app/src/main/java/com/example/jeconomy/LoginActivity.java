@@ -15,7 +15,7 @@ import com.orm.SugarContext;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private TextView tvCadastro;
     private TextInputLayout tilLogin, tilSenha;
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         tvCadastro = findViewById(R.id.tv_cadastrousuario_login);
         tilLogin = findViewById(R.id.til_login_login);
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         tvCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, RegisterUsuarioActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterUsuarioActivity.class));
             }
         });
 
@@ -46,29 +46,34 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String login = tilLogin.getEditText().getText().toString();
                 String senha = tilSenha.getEditText().getText().toString();
-                if(login.isEmpty() || senha.isEmpty()){
-                    Toast.makeText(MainActivity.this, "Preencha Todos os Campos", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if (login.isEmpty() || senha.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Preencha Todos os Campos", Toast.LENGTH_SHORT).show();
+                    clearText();
+                } else {
                     try {
-                        SugarContext.init(MainActivity.this);
-                        usuario =  (Usuario.find(Usuario.class, "login = ?", new String[]{login})).get(0);
+                        SugarContext.init(LoginActivity.this);
+                        usuario = (Usuario.find(Usuario.class, "login = ?", new String[]{login})).get(0);
                         SugarContext.terminate();
-                        if(!usuario.getSenha().equals(senha)){
-                            Toast.makeText(MainActivity.this, "Senha Incorreta", Toast.LENGTH_SHORT).show();
+                        if (!usuario.getSenha().equals(senha)) {
+                            Toast.makeText(LoginActivity.this, "Senha Incorreta", Toast.LENGTH_SHORT).show();
+                            clearText();
+                        } else {
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            clearText();
                         }
-                        else{
-                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                        }
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         System.err.println("<===========================================================>");
                         e.printStackTrace();
                         System.err.println("<===========================================================>");
-                        Toast.makeText(MainActivity.this, "Login Incorreto", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login Incorreto", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
+    }
+
+    private void clearText() {
+        tilLogin.getEditText().setText("");
+        tilSenha.getEditText().setText("");
     }
 }

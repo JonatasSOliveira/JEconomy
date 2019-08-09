@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.example.jeconomy.models.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarContext;
@@ -39,32 +40,41 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
                 String senha = tilSenha.getEditText().getText().toString().trim();
                 String senhaConfirm = tilSenhaConfirm.getEditText().getText().toString().trim();
 
-                if(nome.isEmpty() || login.isEmpty() || contato.isEmpty() || senha.isEmpty() || senhaConfirm.isEmpty()){
+                if (nome.isEmpty() || login.isEmpty() || contato.isEmpty() || senha.isEmpty() || senhaConfirm.isEmpty()) {
                     Toast.makeText(RegisterUsuarioActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                }
-                else if(contato.length() != 11){
+                    clearText();
+                } else if (contato.length() != 11) {
                     Toast.makeText(RegisterUsuarioActivity.this, "Número de Telefone Inválido", Toast.LENGTH_SHORT).show();
-                }
-                else if(!senha.equals(senhaConfirm)){
+                    clearText();
+                } else if (!senha.equals(senhaConfirm)) {
                     Toast.makeText(RegisterUsuarioActivity.this, "Senhas não correspondentes", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                    clearText();
+                } else {
                     usuario = new Usuario(nome, contato, login, senha);
-                    try{
+                    try {
                         usuario.save();
                         Toast.makeText(RegisterUsuarioActivity.this, "Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-                    }
-                    catch (Exception e){
+                        clearText();
+                    } catch (Exception e) {
                         System.err.println("<===========================================================>");
                         e.printStackTrace();
                         System.err.println("<===========================================================>");
                         Toast.makeText(RegisterUsuarioActivity.this, "Um erro ocorreu durante o " +
                                 "processo de salvamento\nPor favor, tente novamente", Toast.LENGTH_SHORT).show();
+                        clearText();
                     }
 
                 }
             }
         });
+    }
+
+    private void clearText() {
+        tilNome.getEditText().setText("");
+        tilContato.getEditText().setText("");
+        tilLogin.getEditText().setText("");
+        tilSenha.getEditText().setText("");
+        tilSenhaConfirm.getEditText().setText("");
     }
 
 }

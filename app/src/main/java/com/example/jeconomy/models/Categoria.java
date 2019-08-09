@@ -5,6 +5,7 @@ import com.orm.SugarRecord;
 public class Categoria extends SugarRecord {
 
     private String nome;
+    private boolean isUsed;
 
     public Categoria(){
 
@@ -12,6 +13,7 @@ public class Categoria extends SugarRecord {
 
     public Categoria(String nome){
         this.nome = nome;
+        this.isUsed = false;
     }
 
     public String getNome() {
