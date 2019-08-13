@@ -38,30 +38,103 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_categoria_registerdespesa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="CATEGORIA" />
 
             <Spinner
                 android:id="@+id/sp_categoria_registerdespesa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_below="@+id/tv_categoria_registerdespesa"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
 
-            <Button
-                android:id="@+id/btn_escolherdataven_registerdespesa"
+            <TextView
+                android:id="@+id/tv_tipo_despesa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ESCOLHER"
-                android:layout_below="@+id/sp_categoria_registerdespesa"/>
+                android:layout_below="@+id/sp_categoria_registerdespesa"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="DESPESA: " />
 
-            <EditText
-                android:id="@+id/et_dataven_registerdespesa"
+            <Spinner
+                android:id="@+id/sp_tipo_despesa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Data de Vencimento"
-                android:layout_toEndOf="@+id/btn_escolherdataven_registerdespesa"
-                android:layout_below="@+id/sp_categoria_registerdespesa"/>
+                android:layout_below="@+id/sp_categoria_registerdespesa"
+                android:layout_toEndOf="@+id/tv_tipo_despesa"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/btn_data_despesa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sp_tipo_despesa"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/escolher" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_data_despesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sp_tipo_despesa"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/btn_data_despesa">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_valor_despesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/til_data_despesa"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/valor"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_formapag_despesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/til_valor_despesa"
+                android:layout_marginTop="10dp"
+                android:text="@string/forma_de_pagamento" />
+
+            <Spinner
+                android:id="@+id/sp_formapag_despesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_formapag_despesa"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:id="@+id/btn_cadastrar_despesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sp_formapag_despesa"
+                android:layout_marginTop="10dp"
+                android:text="@string/cadastrar" />
+
         </RelativeLayout>
     </ScrollView>
 

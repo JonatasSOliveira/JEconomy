@@ -35,4 +35,8 @@
     <string name="editar">Editar</string>
     <string name="cadastro_usu_rio">Cadastro: Usuário</string>
     <string name="cadastro_despesa">Cadastro: Despesa</string>
+    <string name="escolher">ESCOLHER</string>
+    <string name="forma_de_pagamento">Forma de Pagamento</string>
+    <string name="valor">Valor</string>
+    <string name="data_de_pagamento">DATA DE PAGAMENTO</string>
 </resources>
