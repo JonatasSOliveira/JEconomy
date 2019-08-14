@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.example.jeconomy.fragments.CategoriaFragment;
 import com.example.jeconomy.fragments.HomeFragment;
+import com.example.jeconomy.models.Despesa;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -16,6 +17,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.orm.SugarContext;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -24,6 +26,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
+
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

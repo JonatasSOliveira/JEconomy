@@ -112,8 +112,8 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                     String auxValor = tilValor.getEditText().getText().toString();
                     String data = tilData.getEditText().getText().toString();
 
-                    if ((tipoDespesa == 0 && (auxValor.isEmpty() || categoriaItem == 0 || formaPagItem == 0 || data.isEmpty()
-                    )) || (tipoDespesa == 1 && (auxValor.isEmpty() || categoriaItem == 0 || data.isEmpty()))) {
+                    if ((tipoDespesa == 0 && (auxValor.isEmpty() || categoriaItem == 0 || formaPagItem == 0 || data.isEmpty()))
+                            || (tipoDespesa == 1 && (auxValor.isEmpty() || categoriaItem == 0 || data.isEmpty()))) {
                         Toast.makeText(RegisterDespesaActivity.this, "Preencha todos os Campos",
                                 Toast.LENGTH_SHORT).show();
                     } else {
