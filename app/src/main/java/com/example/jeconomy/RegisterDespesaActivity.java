@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.jeconomy.dialog.DatePickerFragment;
 import com.example.jeconomy.models.Categoria;
 import com.example.jeconomy.models.Despesa;
+import com.example.jeconomy.models.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarContext;
 
@@ -33,6 +34,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
     private TextInputLayout tilData, tilValor;
     private Date date;
     private TextView tvFormaPag;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +42,19 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         setContentView(R.layout.activity_register_despesa);
 
         spCategoria = findViewById(R.id.sp_categoria_registerdespesa);
-        spFormaPag = findViewById(R.id.sp_formapag_despesa);
-        spTipoDespesa = findViewById(R.id.sp_tipo_despesa);
-        btnCadastrar = findViewById(R.id.btn_cadastrar_despesa);
-        btnData = findViewById(R.id.btn_data_despesa);
-        tilData = findViewById(R.id.til_data_despesa);
-        tilValor = findViewById(R.id.til_valor_despesa);
-        tvFormaPag = findViewById(R.id.tv_formapag_despesa);
+        spFormaPag = findViewById(R.id.sp_formapag_registerdespesa);
+        spTipoDespesa = findViewById(R.id.sp_tipo_registerdespesa);
+        btnCadastrar = findViewById(R.id.btn_cadastrar_registerdespesa);
+        btnData = findViewById(R.id.btn_data_registerdespesa);
+        tilData = findViewById(R.id.til_data_registerdespesa);
+        tilValor = findViewById(R.id.til_valor_registerdespesa);
+        tvFormaPag = findViewById(R.id.tv_formapag_registerdespesa);
 
         tilData.getEditText().setEnabled(false);
         tilData.setHint("DATA DE PAGAMENTO");
+
+        Bundle bundle = getIntent().getBundleExtra("home");
+        usuario = (Usuario) bundle.getSerializable("user");
 
         String[] listNome, listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "À PAGAR"};
 
@@ -112,25 +117,27 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                     String auxValor = tilValor.getEditText().getText().toString();
                     String data = tilData.getEditText().getText().toString();
 
-                    if ((tipoDespesa == 0 && (auxValor.isEmpty() || categoriaItem == 0 || formaPagItem == 0 || data.isEmpty()))
-                            || (tipoDespesa == 1 && (auxValor.isEmpty() || categoriaItem == 0 || data.isEmpty()))) {
+                    if (categoriaItem == 0 || auxValor.isEmpty() || data.isEmpty() ||
+                            (formaPagItem == 0 && tipoDespesa == 0)) {
                         Toast.makeText(RegisterDespesaActivity.this, "Preencha todos os Campos",
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         double valor = Double.parseDouble(auxValor);
                         Categoria categoria = listCategoria.get(categoriaItem - 1);
-                        Despesa despesa;
+                        Despesa despesa = new Despesa(valor, categoria, usuario);
 
                         if (spTipoDespesa.getSelectedItemPosition() == 0) {
-                            char formaPag;
                             if (formaPagItem == 1) {
-                                formaPag = 'D';
+                                despesa.setFormaPag('D');
                             } else {
-                                formaPag = 'C';
+                                despesa.setFormaPag('C');
                             }
-                            despesa = new Despesa(true, formaPag, date, null, valor, categoria);
+                            despesa.setPago(true);
+                            despesa.setDataPag(date);
+
                         } else {
-                            despesa = new Despesa(false, '0', null, date, valor, categoria);
+                            despesa.setPago(false);
+                            despesa.setDataVenc(date);
                         }
                         try {
                             SugarContext.init(RegisterDespesaActivity.this);

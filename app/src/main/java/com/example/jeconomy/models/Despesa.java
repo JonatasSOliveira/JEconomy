@@ -11,18 +11,35 @@ public class Despesa extends SugarRecord {
     private double valor;
     private boolean isPago;
     private Categoria categoria;
+    private Usuario usuario;
 
     public Despesa(){
 
     }
 
-    public Despesa(boolean isPago, char formaPag, Date dataPag, Date dataVenc, double valor, Categoria categoria) {
-        this.isPago = isPago;
-        this.formaPag = formaPag;
-        this.dataPag = dataPag;
-        this.dataVenc = dataVenc;
+    public Despesa(double valor, Categoria categoria, Usuario usuario) {
         this.valor = valor;
         this.categoria = categoria;
+        this.usuario = usuario;
+        dataPag = null;
+        dataVenc = null;
+        formaPag = '0';
+    }
+
+    public void setFormaPag(char formaPag) {
+        this.formaPag = formaPag;
+    }
+
+    public void setDataPag(Date dataPag) {
+        this.dataPag = dataPag;
+    }
+
+    public void setDataVenc(Date dataVenc) {
+        this.dataVenc = dataVenc;
+    }
+
+    public void setPago(boolean pago) {
+        isPago = pago;
     }
 
     public boolean isPago() {

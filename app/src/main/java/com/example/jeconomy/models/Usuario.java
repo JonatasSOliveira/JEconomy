@@ -2,7 +2,9 @@ package com.example.jeconomy.models;
 
 import com.orm.SugarRecord;
 
-public class Usuario extends SugarRecord {
+import java.io.Serializable;
+
+public class Usuario extends SugarRecord implements Serializable {
 
     private String nome;
     private String contato;
@@ -22,5 +24,8 @@ public class Usuario extends SugarRecord {
 
     public String getSenha() {
         return senha;
+    }
+    public String getNome(){
+        return nome;
     }
 }

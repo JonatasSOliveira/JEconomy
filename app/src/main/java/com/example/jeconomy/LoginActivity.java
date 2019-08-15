@@ -58,7 +58,11 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Senha Incorreta", Toast.LENGTH_SHORT).show();
                             clearText();
                         } else {
-                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("user", usuario);
+                            intent.putExtra("tela_login", bundle);
+                            startActivity(intent);
                             clearText();
                         }
                     } catch (Exception e) {

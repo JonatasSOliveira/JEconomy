@@ -56,7 +56,7 @@
                 android:layout_marginBottom="10dp" />
 
             <TextView
-                android:id="@+id/tv_tipo_despesa"
+                android:id="@+id/tv_tipo_registerdespesa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/sp_categoria_registerdespesa"
@@ -65,32 +65,32 @@
                 android:text="DESPESA: " />
 
             <Spinner
-                android:id="@+id/sp_tipo_despesa"
+                android:id="@+id/sp_tipo_registerdespesa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/sp_categoria_registerdespesa"
-                android:layout_toEndOf="@+id/tv_tipo_despesa"
+                android:layout_toEndOf="@+id/tv_tipo_registerdespesa"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>
 
             <Button
-                android:id="@+id/btn_data_despesa"
+                android:id="@+id/btn_data_registerdespesa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sp_tipo_despesa"
+                android:layout_below="@+id/sp_tipo_registerdespesa"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/escolher" />
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_data_despesa"
+                android:id="@+id/til_data_registerdespesa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sp_tipo_despesa"
+                android:layout_below="@+id/sp_tipo_registerdespesa"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_toEndOf="@+id/btn_data_despesa">
+                android:layout_toEndOf="@+id/btn_data_registerdespesa">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -98,10 +98,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_valor_despesa"
+                android:id="@+id/til_valor_registerdespesa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/til_data_despesa"
+                android:layout_below="@+id/til_data_registerdespesa"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
 
@@ -113,25 +113,25 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/tv_formapag_despesa"
+                android:id="@+id/tv_formapag_registerdespesa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/til_valor_despesa"
+                android:layout_below="@id/til_valor_registerdespesa"
                 android:layout_marginTop="10dp"
                 android:text="@string/forma_de_pagamento" />
 
             <Spinner
-                android:id="@+id/sp_formapag_despesa"
+                android:id="@+id/sp_formapag_registerdespesa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_formapag_despesa"
+                android:layout_below="@+id/tv_formapag_registerdespesa"
                 android:layout_marginBottom="10dp" />
 
             <Button
-                android:id="@+id/btn_cadastrar_despesa"
+                android:id="@+id/btn_cadastrar_registerdespesa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sp_formapag_despesa"
+                android:layout_below="@+id/sp_formapag_registerdespesa"
                 android:layout_marginTop="10dp"
                 android:text="@string/cadastrar" />
 

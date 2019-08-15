@@ -1,10 +1,12 @@
 package com.example.jeconomy;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.jeconomy.fragments.CategoriaFragment;
 import com.example.jeconomy.fragments.HomeFragment;
 import com.example.jeconomy.models.Despesa;
+import com.example.jeconomy.models.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -26,6 +28,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -33,6 +36,8 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActionBar bar;
+    private Usuario usuario;
+    private TextView tvNome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +53,21 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fl_home, new HomeFragment());
-        ft.commit();
-
         navigationView.setCheckedItem(R.id.nav_home);
         bar = getSupportActionBar();
         bar.setTitle("Principal");
+
+        View headerView = navigationView.getHeaderView(0);
+        tvNome = headerView.findViewById(R.id.tv_nome_navheader);
+
+        Bundle bundle = getIntent().getBundleExtra("tela_login");
+        usuario = (Usuario) bundle.getSerializable("user");
+        tvNome.setText(usuario.getNome());
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fl_home, new HomeFragment(usuario));
+        ft.commit();
+
     }
 
     @Override
@@ -97,12 +110,11 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fl_home, new HomeFragment());
+            ft.replace(R.id.fl_home, new HomeFragment(usuario));
             ft.commit();
             bar = getSupportActionBar();
             bar.setTitle("Principal");
-        }
-        else if (id == R.id.nav_categoria){
+        } else if (id == R.id.nav_categoria) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fl_home, new CategoriaFragment());
             ft.commit();

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".RegisterReceitaActivity">
+
+    <TextView
+        android:id="@+id/tv_cadastroreceita_registerreceita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Cadastro:Receita"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_cadastroreceita_registerreceita"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_tipo_registerreceita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="TIPO RECEITA" />
+
+            <Spinner
+                android:id="@+id/sp_tipo_registerreceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/tv_tipo_registerreceita" />
+
+            <TextView
+                android:id="@+id/tv_categoria_registerreceita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tipo_registerreceita"
+                android:layout_marginTop="10dp"
+                android:text="CATEGORIA" />
+
+            <Spinner
+                android:id="@+id/sp_categoria_registerreceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_categoria_registerreceita"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:id="@+id/tv_tipopag_registerreceita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sp_categoria_registerreceita"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="RECEITA:" />
+
+            <Spinner
+                android:id="@+id/sp_tipopag_registerreceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sp_categoria_registerreceita"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/tv_tipopag_registerreceita" />
+
+            <Button
+                android:id="@+id/btn_datasv_registerreceita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tipopag_registerreceita"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/escolher" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_datasv_registerreceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tipopag_registerreceita"
+                android:layout_toEndOf="@id/btn_datasv_registerreceita">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_datapv_registerreceita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_datasv_registerreceita"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/escolher" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_datapv_registerreceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_datasv_registerreceita"
+                android:layout_toEndOf="@id/btn_datapv_registerreceita">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_valor_registerreceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_datapv_registerreceita"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Valor"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_desconto_registerreceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/til_valor_registerreceita">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Desconto (%)"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_valortotal_registerreceita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/til_desconto_registerreceita"
+                android:text="Valor Total: R$ 0,00"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_formapag_registerreceita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forma_de_pagamento"
+                android:layout_below="@+id/tv_valortotal_registerreceita"
+                android:layout_marginTop="10dp"/>
+
+            <Spinner
+                android:id="@+id/sp_formapag_registerreceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_formapag_registerreceita"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/btn_cadastrar_registerreceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cadastrar"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/sp_formapag_registerreceita"/>
+
+        </RelativeLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

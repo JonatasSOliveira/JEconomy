@@ -6,33 +6,70 @@ import java.util.Date;
 
 public class Receita extends SugarRecord {
 
+    private char tipoReceita;
+    private Categoria categoria;
+    private double preco;
     private double porcentDescon;
-    private double precoDescon;
     private double precoTotal;
-    private Date dataReceita;
+    private Date dataVend;
     private Date dataPag;
-    private String formaPamento;
-    private Date dataVenda;
+    private Date dataVenc;
+    private char formaPamento;
     private Date dataServ;
     private Usuario usuario;
-    private Categoria categoria;
+    private boolean isPago;
 
-    public Receita(){
+
+    public Receita() {
 
     }
 
-    public Receita(double porcentDescon, double precoDescon, double precoTotal, Date dataReceita,
-                   Date dataPag, String formaPamento, Date dataVenda, Date dataServ, Usuario usuario,
-                   Categoria categoria){
-        this.porcentDescon = porcentDescon;
-        this.precoDescon = precoDescon;
-        this.precoTotal = precoTotal;
-        this.dataReceita = dataReceita;
-        this.dataPag = dataPag;
-        this.formaPamento = formaPamento;
-        this.dataVenda = dataVenda;
-        this.dataServ = dataServ;
-        this.usuario = usuario;
+    public Receita(Categoria categoria, double preco, double porcentDescon, double precoTotal, Usuario usuario) {
         this.categoria = categoria;
+        this.preco = preco;
+        this.porcentDescon = porcentDescon;
+        this.precoTotal = precoTotal;
+        this.usuario = usuario;
+        dataVenc = null;
+        dataPag = null;
+        dataServ = null;
+        dataVend = null;
+        formaPamento = '0';
+    }
+
+    public void setTipoReceita(char tipoReceita) {
+        this.tipoReceita = tipoReceita;
+    }
+
+    public void setDataVend(Date dataVend) {
+        this.dataVend = dataVend;
+    }
+
+    public void setDataPag(Date dataPag) {
+        this.dataPag = dataPag;
+    }
+
+    public void setDataVenc(Date dataVenc) {
+        this.dataVenc = dataVenc;
+    }
+
+    public void setFormaPamento(char formaPamento) {
+        this.formaPamento = formaPamento;
+    }
+
+    public void setDataServ(Date dataServ) {
+        this.dataServ = dataServ;
+    }
+
+    public void setPago(boolean pago) {
+        isPago = pago;
+    }
+
+    public double getPrecoTotal() {
+        return precoTotal;
+    }
+
+    public boolean isPago() {
+        return isPago;
     }
 }
