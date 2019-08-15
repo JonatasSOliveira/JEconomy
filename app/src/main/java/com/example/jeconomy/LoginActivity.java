@@ -44,8 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         btnAcessar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String login = tilLogin.getEditText().getText().toString();
-                String senha = tilSenha.getEditText().getText().toString();
+                String login = tilLogin.getEditText().getText().toString().trim();
+                String senha = tilSenha.getEditText().getText().toString().trim();
                 if (login.isEmpty() || senha.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Preencha Todos os Campos", Toast.LENGTH_SHORT).show();
                     clearText();
