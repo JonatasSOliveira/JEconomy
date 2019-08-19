@@ -14,18 +14,21 @@ import com.example.jeconomy.R;
 import com.example.jeconomy.models.Categoria;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class CategoriaDialog extends AppCompatDialogFragment {
+public class RegisterCategoriaDialog extends AppCompatDialogFragment {
     private TextInputLayout tilCategoria;
     private Categoria oldCategoria;
-    public interface OnInputSelected{
+
+    public interface OnInputSelected {
         void sendInput(String input, Categoria oldCategoria);
     }
+
     public OnInputSelected onInputSelected;
 
-    public CategoriaDialog(){
+    public RegisterCategoriaDialog() {
         oldCategoria = null;
     }
-    public CategoriaDialog(Categoria oldCategoria){
+
+    public RegisterCategoriaDialog(Categoria oldCategoria) {
         this.oldCategoria = oldCategoria;
     }
 
@@ -34,7 +37,7 @@ public class CategoriaDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_cadastro_categoria, null);
+        View view = inflater.inflate(R.layout.dialog_register_categoria, null);
         builder.setView(view).setTitle("Nova Categoria").setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -44,14 +47,14 @@ public class CategoriaDialog extends AppCompatDialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String nome = tilCategoria.getEditText().getText().toString().trim().toUpperCase();
-                if(!nome.isEmpty()){
+                if (!nome.isEmpty()) {
                     onInputSelected.sendInput(nome, oldCategoria);
                 }
             }
         });
 
         tilCategoria = view.findViewById(R.id.til_categoria_dialogcategoria);
-        if(oldCategoria != null){
+        if (oldCategoria != null) {
             tilCategoria.getEditText().setText(oldCategoria.getNome());
         }
 
@@ -62,10 +65,9 @@ public class CategoriaDialog extends AppCompatDialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        try{
+        try {
             onInputSelected = (OnInputSelected) getTargetFragment();
-        }
-        catch (ClassCastException e){
+        } catch (ClassCastException e) {
             e.printStackTrace();
         }
     }

@@ -39,4 +39,7 @@
     <string name="forma_de_pagamento">Forma de Pagamento</string>
     <string name="valor">Valor</string>
     <string name="data_de_pagamento">DATA DE PAGAMENTO</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

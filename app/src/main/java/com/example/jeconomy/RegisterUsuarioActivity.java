@@ -52,9 +52,12 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
                 } else {
                     usuario = new Usuario(nome, contato, login, senha);
                     try {
+                        SugarContext.init(RegisterUsuarioActivity.this);
                         usuario.save();
+                        SugarContext.terminate();
                         Toast.makeText(RegisterUsuarioActivity.this, "Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
                         clearText();
+                        finish();
                     } catch (Exception e) {
                         System.err.println("<===========================================================>");
                         e.printStackTrace();

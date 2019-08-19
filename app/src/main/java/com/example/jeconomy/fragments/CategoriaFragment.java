@@ -14,13 +14,13 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.jeconomy.R;
 import com.example.jeconomy.adapter.CategoriaAdapter;
-import com.example.jeconomy.dialog.CategoriaDialog;
+import com.example.jeconomy.dialog.RegisterCategoriaDialog;
 import com.example.jeconomy.models.Categoria;
 import com.orm.SugarContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriaFragment extends Fragment implements CategoriaDialog.OnInputSelected {
+public class CategoriaFragment extends Fragment implements RegisterCategoriaDialog.OnInputSelected {
 
     private RecyclerView rvCategoria;
     private List<Categoria> listCategoria;
@@ -55,12 +55,12 @@ public class CategoriaFragment extends Fragment implements CategoriaDialog.OnInp
     }
 
     public void openDialog(Categoria categoria){
-        CategoriaDialog categoriaDialog;
+        RegisterCategoriaDialog categoriaDialog;
         if(categoria == null){
-            categoriaDialog = new CategoriaDialog();
+            categoriaDialog = new RegisterCategoriaDialog();
         }
         else{
-            categoriaDialog = new CategoriaDialog(categoria);
+            categoriaDialog = new RegisterCategoriaDialog(categoria);
         }
         categoriaDialog.setTargetFragment(CategoriaFragment.this, 1);
         categoriaDialog.show(getFragmentManager(), "Cadastro: Categoria");
@@ -96,9 +96,9 @@ public class CategoriaFragment extends Fragment implements CategoriaDialog.OnInp
             listCategoria = Categoria.listAll(Categoria.class);
             SugarContext.terminate();
             if(listCategoria != null){
-                CategoriaAdapter categoriaAdapter = new CategoriaAdapter(getActivity(), listCategoria);
-                rvCategoria.setAdapter(categoriaAdapter);
-                categoriaAdapter.setControlCategoria(new CategoriaAdapter.ControlCategoria() {
+                CategoriaAdapter adapter = new CategoriaAdapter(getActivity(), listCategoria);
+                rvCategoria.setAdapter(adapter);
+                adapter.setControlCategoria(new CategoriaAdapter.ControlCategoria() {
                     @Override
                     public void deleteCategoria(Categoria categoria) {
                         try{

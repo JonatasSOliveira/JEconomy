@@ -128,9 +128,9 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
 
                         if (spTipoDespesa.getSelectedItemPosition() == 0) {
                             if (formaPagItem == 1) {
-                                despesa.setFormaPag('D');
+                                despesa.setFormaPag("D");
                             } else {
-                                despesa.setFormaPag('C');
+                                despesa.setFormaPag("C");
                             }
                             despesa.setPago(true);
                             despesa.setDataPag(date);

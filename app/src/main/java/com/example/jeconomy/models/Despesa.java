@@ -5,7 +5,7 @@ import com.orm.SugarRecord;
 import java.util.Date;
 
 public class Despesa extends SugarRecord {
-    private char formaPag;
+    private String formaPag;
     private Date dataPag;
     private Date dataVenc;
     private double valor;
@@ -23,10 +23,10 @@ public class Despesa extends SugarRecord {
         this.usuario = usuario;
         dataPag = null;
         dataVenc = null;
-        formaPag = '0';
+        formaPag = "";
     }
 
-    public void setFormaPag(char formaPag) {
+    public void setFormaPag(String formaPag) {
         this.formaPag = formaPag;
     }
 
@@ -48,5 +48,17 @@ public class Despesa extends SugarRecord {
 
     public double getValor() {
         return valor;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public Date getDataPag() {
+        return dataPag;
+    }
+
+    public Date getDataVenc() {
+        return dataVenc;
     }
 }

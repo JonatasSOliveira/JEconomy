@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/div_top_despesa"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/tv_categoria_itemdespesa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/div_top_despesa"
+        android:layout_alignParentStart="true"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:text="Categoria" />
+
+    <TextView
+        android:id="@+id/tv_data_itemdespesa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/div_top_despesa"
+        android:layout_marginEnd="15dp"
+        android:layout_toStartOf="@+id/btn_visualizar_itemdespesa"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:text="Data" />
+
+    <ImageButton
+        android:id="@+id/btn_visualizar_itemdespesa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/div_top_despesa"
+        android:layout_alignParentEnd="true"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        app:srcCompat="@drawable/ic_eye" />
+
+    <View
+        android:id="@+id/div_bottom_despesa"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_categoria_despesa"
+        android:background="?android:attr/listDivider" />
+</RelativeLayout>

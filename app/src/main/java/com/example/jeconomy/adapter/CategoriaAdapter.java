@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.jeconomy.R;
 import com.example.jeconomy.models.Categoria;
-
 import java.util.List;
 
 public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyViewHolder> {
@@ -45,7 +44,7 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        holder.tvNome.setText(listCategoria.get(position).getNome());
+        holder.tvCategoria.setText(listCategoria.get(position).getNome());
     }
 
     @Override
@@ -59,13 +58,13 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView tvNome;
+        public TextView tvCategoria;
         public ImageButton btnEdit, btnDelete;
 
         public MyViewHolder(@NonNull View itemView, ControlCategoria categoria) {
             super(itemView);
 
-            tvNome = itemView.findViewById(R.id.tv_nome_itemcategoria);
+            tvCategoria = itemView.findViewById(R.id.tv_nome_itemcategoria);
             btnDelete = itemView.findViewById(R.id.btn_delete_itemcategoria);
             btnEdit = itemView.findViewById(R.id.btn_edit_itemcategoria);
 
