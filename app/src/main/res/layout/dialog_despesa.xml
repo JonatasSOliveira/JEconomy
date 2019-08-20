@@ -24,4 +24,42 @@
         android:paddingStart="5dp"
         android:layout_toEndOf="@+id/tv_categoria_registerdialog"
         android:text="Nome" />
+
+    <TextView
+        android:id="@+id/tv_datapag_despesadialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_below="@+id/tv_categoria_despesadialog"
+        android:text="Data Pagamento:"/>
+
+    <TextView
+        android:id="@+id/tv_infodatapaga_despesadialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_below="@+id/tv_infocategoria_despesadialog"
+        android:layout_toEndOf="@+id/tv_datapag_despesadialog"
+        android:text="data"/>
+
+      <TextView
+          android:id="@+id/tv_datavenc_despesadialog"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingTop="10dp"
+          android:paddingBottom="10dp"
+          android:layout_below="@+id/tv_datapag_despesadialog"
+          android:text="Data Vencimento:"/>
+
+      <TextView
+          android:id="@+id/tv_infodatavenc_despesadialog"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingTop="10dp"
+          android:paddingBottom="10dp"
+          android:layout_below="@+id/tv_infodatapaga_despesadialog"
+          android:layout_toEndOf="@+id/tv_datavenc_despesadialog"
+          android:text="data"/>
 </RelativeLayout>

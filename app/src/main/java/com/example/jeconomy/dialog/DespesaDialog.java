@@ -10,11 +10,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import java.text.DateFormat;
 import com.example.jeconomy.R;
 import com.example.jeconomy.models.Despesa;
 
 public class DespesaDialog extends AppCompatDialogFragment {
-    private TextView tvCategoria;
+    private TextView tvCategoria, tvDataPag, tvDataVenc;
     private Despesa despesa;
 
 
@@ -36,7 +37,21 @@ public class DespesaDialog extends AppCompatDialogFragment {
         });
 
         tvCategoria = view.findViewById(R.id.tv_infocategoria_despesadialog);
+        tvDataPag = view.findViewById(R.id.tv_infodatapaga_despesadialog);
+        tvDataVenc = view.findViewById(R.id.tv_infodatavenc_despesadialog);
+
         tvCategoria.setText(despesa.getCategoria().getNome());
+
+        String data;
+
+        if(despesa.isPago()){
+            data = DateFormat.getDateInstance(DateFormat.SHORT).format(listDespesa.get(position).getDataPag());
+            tvDataPag.setText(data);
+        }
+        if(despesa.getDataVenc() != null){
+            data = DateFormat.getDateInstance(DateFormat.SHORT).format(listDespesa.get(position).getDataVenc());
+            tvDataVenc.setText(data)
+        }
 
         return builder.create();
     }
