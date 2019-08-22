@@ -61,4 +61,8 @@ public class Despesa extends SugarRecord {
     public Date getDataVenc() {
         return dataVenc;
     }
+
+    public String getFormaPag() {
+        return formaPag;
+    }
 }

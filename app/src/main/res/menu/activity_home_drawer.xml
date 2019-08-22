@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_money"
             android:title="Despesa" />
         <item
+            android:id="@+id/nav_receita"
+            android:icon="@drawable/ic_money"
+            android:title="Receita" />
+        <item
             android:id="@+id/nav_categoria"
             android:icon="@drawable/ic_list"
             android:title="Categoria" />

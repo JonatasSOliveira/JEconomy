@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.example.jeconomy.fragments.CategoriaFragment;
 import com.example.jeconomy.fragments.DespesaFragment;
 import com.example.jeconomy.fragments.HomeFragment;
+import com.example.jeconomy.fragments.ReceitaFragment;
 import com.example.jeconomy.models.Despesa;
 import com.example.jeconomy.models.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -127,6 +128,12 @@ public class HomeActivity extends AppCompatActivity
             ft.commit();
             bar = getSupportActionBar();
             bar.setTitle("Despesa");
+        } else if (id == R.id.nav_receita){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fl_home, new ReceitaFragment());
+            ft.commit();
+            bar = getSupportActionBar();
+            bar.setTitle("Receita");
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
