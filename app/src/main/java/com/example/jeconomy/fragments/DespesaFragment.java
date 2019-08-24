@@ -12,9 +12,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.jeconomy.R;
-import com.example.jeconomy.adapter.DespesaAdapter;
+import com.example.jeconomy.adapter.ContasAdapter;
 import com.example.jeconomy.dialog.DespesaDialog;
 import com.example.jeconomy.models.Despesa;
 import com.orm.SugarContext;
@@ -25,6 +26,7 @@ public class DespesaFragment extends Fragment {
     private Spinner spTipo;
     private RecyclerView rvDespesa;
     private List<Despesa> listDespesa;
+    private TextView tvConta;
 
     public DespesaFragment() {
         // Required empty public constructor
@@ -33,17 +35,19 @@ public class DespesaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_despesa, container, false);
+        View view = inflater.inflate(R.layout.fragment_contas, container, false);
 
-        spTipo = view.findViewById(R.id.sp_tipo_despesa);
-        rvDespesa = view.findViewById(R.id.rv_despesa_despesa);
+        spTipo = view.findViewById(R.id.sp_tipo_contas);
+        rvDespesa = view.findViewById(R.id.rv_contas_contas);
+        tvConta = view.findViewById(R.id.tv_conta_contas);
+
+        tvConta.setText("Despesas");
         rvDespesa.setHasFixedSize(true);
 
-        String tipo[] = {"PAGAS", "À PAGAR"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,
-                tipo);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.tipo_conta,
+                android.R.layout.simple_spinner_item);
 
-        spTipo.setAdapter(arrayAdapter);
+        spTipo.setAdapter(adapter);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(RecyclerView.VERTICAL);
@@ -52,10 +56,9 @@ public class DespesaFragment extends Fragment {
         spTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i == 0){
+                if (i == 0) {
                     updateRecycleView(1);
-                }
-                else{
+                } else {
                     updateRecycleView(0);
                 }
             }
@@ -66,18 +69,17 @@ public class DespesaFragment extends Fragment {
         });
 
 
-
         return view;
     }
 
-    private void updateRecycleView(int isPago){
+    private void updateRecycleView(int isPago) {
         try {
             SugarContext.init(getContext());
             listDespesa = Despesa.find(Despesa.class, "IS_PAGO = ?", "" + isPago);
             SugarContext.terminate();
             if (listDespesa != null) {
-                DespesaAdapter adapter = new DespesaAdapter(getContext(), listDespesa);
-                adapter.setControlDespesa(new DespesaAdapter.ControlDespesa() {
+                ContasAdapter adapter = new ContasAdapter(getContext(), listDespesa, 'D');
+                adapter.setControlDespesa(new ContasAdapter.ControlDespesa() {
                     @Override
                     public void openDialog(Despesa despesa) {
                         DespesaDialog dialog = new DespesaDialog(despesa);

@@ -72,4 +72,16 @@ public class Receita extends SugarRecord {
     public boolean isPago() {
         return isPago;
     }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public Date getDataPag() {
+        return dataPag;
+    }
+
+    public Date getDataVenc() {
+        return dataVenc;
+    }
 }

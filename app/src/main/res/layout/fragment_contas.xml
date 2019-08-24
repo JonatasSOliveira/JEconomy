@@ -11,36 +11,43 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv_categoria_despesa"
+            android:id="@+id/tv_conta_contas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:text="Receitas" />
+
+        <TextView
+            android:id="@+id/tv_categoria_contas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_conta_contas"
+            android:layout_alignParentStart="true"
+            android:paddingTop="10dp"
             android:text="Categoria" />
 
         <Spinner
-            android:id="@+id/sp_tipo_despesa"
+            android:id="@+id/sp_tipo_contas"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
 
         <TextView
-            android:id="@+id/tv_data_despesa"
+            android:id="@+id/tv_data_contas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/sp_tipo_despesa"
-            android:paddingEnd="5dp"
+            android:layout_below="@+id/sp_tipo_contas"
+            android:layout_alignParentEnd="true"
+            android:paddingTop="10dp"
+            android:paddingEnd="95dp"
             android:text="Data" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_despesa_despesa"
+            android:id="@+id/rv_contas_contas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tv_data_despesa"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp" />
+            android:layout_below="@+id/tv_data_contas" />
     </RelativeLayout>
 </FrameLayout>
