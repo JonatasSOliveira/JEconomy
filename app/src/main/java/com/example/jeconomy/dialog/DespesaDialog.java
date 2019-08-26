@@ -30,10 +30,9 @@ public class DespesaDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_despesa, null);
 
-        builder.setView(view).setTitle("Despesa").setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        builder.setView(view).setTitle("Despesa").setNegativeButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
         });
 

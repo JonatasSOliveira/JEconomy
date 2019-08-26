@@ -22,14 +22,16 @@ public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHold
     private List<Despesa> listDespesa;
     private List<Receita> listReceita;
     private LayoutInflater layoutInflater;
-    private ControlDespesa controlDespesa;
+    private ControlConta controlConta;
 
-    public interface ControlDespesa {
-        void openDialog(Despesa despesa);
+    public interface ControlConta {
+        void openDespesaDialog(Despesa despesa);
+
+        void openReceitaDialog(Receita receita);
     }
 
-    public void setControlDespesa(ControlDespesa controlDespesa) {
-        this.controlDespesa = controlDespesa;
+    public void setControlConta(ControlConta controlConta) {
+        this.controlConta = controlConta;
     }
 
 
@@ -67,7 +69,7 @@ public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHold
             holder.btnVisualizar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    controlDespesa.openDialog(listDespesa.get(position));
+                    controlConta.openDespesaDialog(listDespesa.get(position));
                 }
             });
         } else {
@@ -80,6 +82,12 @@ public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHold
                 date = DateFormat.getDateInstance(DateFormat.SHORT).format(listReceita.get(position).getDataVenc());
                 holder.tvData.setText(date);
             }
+            holder.btnVisualizar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    controlConta.openReceitaDialog(listReceita.get(position));
+                }
+            });
         }
 
     }

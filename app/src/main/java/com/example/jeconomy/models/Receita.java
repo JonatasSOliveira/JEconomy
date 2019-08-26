@@ -6,15 +6,15 @@ import java.util.Date;
 
 public class Receita extends SugarRecord {
 
-    private char tipoReceita;
+    private String tipoReceita;
     private Categoria categoria;
-    private double preco;
-    private double porcentDescon;
-    private double precoTotal;
+    private double valor;
+    private double desconto;
+    private double valorTotal;
     private Date dataVend;
     private Date dataPag;
     private Date dataVenc;
-    private char formaPamento;
+    private String formaPagamento;
     private Date dataServ;
     private Usuario usuario;
     private boolean isPago;
@@ -24,20 +24,20 @@ public class Receita extends SugarRecord {
 
     }
 
-    public Receita(Categoria categoria, double preco, double porcentDescon, double precoTotal, Usuario usuario) {
+    public Receita(Categoria categoria, double valor, double desconto, double valorTotal, Usuario usuario) {
         this.categoria = categoria;
-        this.preco = preco;
-        this.porcentDescon = porcentDescon;
-        this.precoTotal = precoTotal;
+        this.valor = valor;
+        this.desconto = desconto;
+        this.valorTotal = valorTotal;
         this.usuario = usuario;
         dataVenc = null;
         dataPag = null;
         dataServ = null;
         dataVend = null;
-        formaPamento = '0';
+        formaPagamento = "0";
     }
 
-    public void setTipoReceita(char tipoReceita) {
+    public void setTipoReceita(String tipoReceita) {
         this.tipoReceita = tipoReceita;
     }
 
@@ -53,8 +53,8 @@ public class Receita extends SugarRecord {
         this.dataVenc = dataVenc;
     }
 
-    public void setFormaPamento(char formaPamento) {
-        this.formaPamento = formaPamento;
+    public void setFormaPagamento(String formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
 
     public void setDataServ(Date dataServ) {
@@ -65,8 +65,8 @@ public class Receita extends SugarRecord {
         isPago = pago;
     }
 
-    public double getPrecoTotal() {
-        return precoTotal;
+    public double getValorTotal() {
+        return valorTotal;
     }
 
     public boolean isPago() {
@@ -81,7 +81,31 @@ public class Receita extends SugarRecord {
         return dataPag;
     }
 
+    public double getDesconto() {
+        return desconto;
+    }
+
     public Date getDataVenc() {
         return dataVenc;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public String getTipoReceita() {
+        return tipoReceita;
+    }
+
+    public Date getDataVend() {
+        return dataVend;
+    }
+
+    public Date getDataServ() {
+        return dataServ;
     }
 }

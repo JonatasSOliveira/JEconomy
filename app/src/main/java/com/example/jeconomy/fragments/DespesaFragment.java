@@ -18,6 +18,7 @@ import com.example.jeconomy.R;
 import com.example.jeconomy.adapter.ContasAdapter;
 import com.example.jeconomy.dialog.DespesaDialog;
 import com.example.jeconomy.models.Despesa;
+import com.example.jeconomy.models.Receita;
 import com.orm.SugarContext;
 
 import java.util.List;
@@ -79,11 +80,15 @@ public class DespesaFragment extends Fragment {
             SugarContext.terminate();
             if (listDespesa != null) {
                 ContasAdapter adapter = new ContasAdapter(getContext(), listDespesa, 'D');
-                adapter.setControlDespesa(new ContasAdapter.ControlDespesa() {
+                adapter.setControlConta(new ContasAdapter.ControlConta() {
                     @Override
-                    public void openDialog(Despesa despesa) {
+                    public void openDespesaDialog(Despesa despesa) {
                         DespesaDialog dialog = new DespesaDialog(despesa);
                         dialog.show(getFragmentManager(), "Relatorio: Despesa");
+                    }
+
+                    @Override
+                    public void openReceitaDialog(Receita receita) {
                     }
                 });
                 rvDespesa.setAdapter(adapter);

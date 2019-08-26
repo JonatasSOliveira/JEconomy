@@ -111,7 +111,7 @@ public class HomeFragment extends Fragment {
 
             for (int c = 0; c < listReceita.size(); c++) {
                 if (listReceita.get(c).isPago() == true) {
-                    receitaTotal = receitaTotal + listReceita.get(c).getPrecoTotal();
+                    receitaTotal = receitaTotal + listReceita.get(c).getValorTotal();
                 }
             }
             String aux = "R$: " + receitaTotal;

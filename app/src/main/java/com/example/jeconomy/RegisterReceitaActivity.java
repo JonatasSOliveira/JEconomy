@@ -246,20 +246,20 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                         int tipo = spTipo.getSelectedItemPosition();
 
                         if (tipo == 0) {
-                            receita.setTipoReceita('V');
+                            receita.setTipoReceita("V");
                             receita.setDataVend(dataSv);
 
                         } else {
-                            receita.setTipoReceita('S');
+                            receita.setTipoReceita("S");
                             receita.setDataServ(dataSv);
                         }
                         if (tipoPag == 0) {
                             receita.setPago(true);
                             receita.setDataPag(dataPv);
                             if (formaPag == 1) {
-                                receita.setFormaPamento('D');
+                                receita.setFormaPagamento("D");
                             } else {
-                                receita.setFormaPamento('C');
+                                receita.setFormaPagamento("C");
                             }
                         } else {
                             receita.setPago(false);

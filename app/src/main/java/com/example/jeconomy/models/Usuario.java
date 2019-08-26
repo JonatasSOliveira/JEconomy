@@ -7,7 +7,6 @@ import java.io.Serializable;
 public class Usuario extends SugarRecord implements Serializable {
 
     private String nome;
-    private String contato;
     private String login;
     private String senha;
 
@@ -15,9 +14,8 @@ public class Usuario extends SugarRecord implements Serializable {
 
     }
 
-    public Usuario(String nome, String contato, String login, String senha){
+    public Usuario(String nome, String login, String senha){
         this.nome = nome;
-        this.contato = contato;
         this.login = login;
         this.senha = senha;
     }

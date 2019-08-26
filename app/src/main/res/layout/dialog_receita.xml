@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_tipo_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Tipo de Receita: " />
+
+            <TextView
+                android:id="@+id/tv_infotipo_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/tv_tipo_receitadialog"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Tipo" />
+
+            <TextView
+                android:id="@+id/tv_categoria_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tipo_receitadialog"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Categoria:" />
+
+            <TextView
+                android:id="@+id/tv_infocategoria_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_infotipo_receitadialog"
+                android:layout_toEndOf="@+id/tv_categoria_receitadialog"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Nome" />
+
+            <TextView
+                android:id="@+id/tv_dataservvenda_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_categoria_receitadialog"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Data da Venda:" />
+
+            <TextView
+                android:id="@+id/tv_infodataservvenda_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_infocategoria_receitadialog"
+                android:layout_toEndOf="@+id/tv_dataservvenda_receitadialog"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="data" />
+
+            <TextView
+                android:id="@+id/tv_datapag_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_dataservvenda_receitadialog"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Data Pagamento:" />
+
+            <TextView
+                android:id="@+id/tv_infodatapaga_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_infodataservvenda_receitadialog"
+                android:layout_toEndOf="@+id/tv_datapag_receitadialog"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Não Paga" />
+
+            <TextView
+                android:id="@+id/tv_datavenc_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_datapag_receitadialog"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Data Vencimento:" />
+
+            <TextView
+                android:id="@+id/tv_infodatavenc_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_infodatapaga_receitadialog"
+                android:layout_toEndOf="@+id/tv_datavenc_receitadialog"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Pagamento à Vista" />
+
+            <TextView
+                android:id="@+id/tv_valor_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_infodatavenc_receitadialog"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Valor: " />
+
+            <TextView
+                android:id="@+id/tv_infovalor_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_infodatavenc_receitadialog"
+                android:layout_toEndOf="@+id/tv_valor_receitadialog"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Valor" />
+
+            <TextView
+                android:id="@+id/tv_desconto_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_valor_receitadialog"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Desconto: " />
+
+            <TextView
+                android:id="@+id/tv_infodesconto_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_infovalor_receitadialog"
+                android:layout_toEndOf="@+id/tv_desconto_receitadialog"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="0%" />
+
+            <TextView
+                android:id="@+id/tv_valortotal_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_desconto_receitadialog"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Valor Total: " />
+
+            <TextView
+                android:id="@+id/tv_infovalortotal_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_infodesconto_receitadialog"
+                android:layout_toEndOf="@+id/tv_valortotal_receitadialog"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="valor" />
+
+            <TextView
+                android:id="@+id/tv_formapag_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_valortotal_receitadialog"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Forma de Pagamento " />
+
+            <TextView
+                android:id="@+id/tv_infoformapag_receitadialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_infovalortotal_receitadialog"
+                android:layout_toEndOf="@+id/tv_formapag_receitadialog"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Não Paga" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

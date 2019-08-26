@@ -25,7 +25,6 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
         SugarContext.init(RegisterUsuarioActivity.this);
 
         tilNome = findViewById(R.id.til_nome_cadastrousuario);
-        tilContato = findViewById(R.id.til_contato_cadastrousuario);
         tilLogin = findViewById(R.id.til_login_cadastrousuario);
         tilSenha = findViewById(R.id.til_senha_cadastrousuario);
         tilSenhaConfirm = findViewById(R.id.til_senhaconfirm_cadastrousuario);
@@ -36,21 +35,17 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String nome = tilNome.getEditText().getText().toString().trim().toUpperCase();
                 String login = tilLogin.getEditText().getText().toString().trim();
-                String contato = tilContato.getEditText().getText().toString().trim();
                 String senha = tilSenha.getEditText().getText().toString().trim();
                 String senhaConfirm = tilSenhaConfirm.getEditText().getText().toString().trim();
 
-                if (nome.isEmpty() || login.isEmpty() || contato.isEmpty() || senha.isEmpty() || senhaConfirm.isEmpty()) {
+                if (nome.isEmpty() || login.isEmpty() || senha.isEmpty() || senhaConfirm.isEmpty()) {
                     Toast.makeText(RegisterUsuarioActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                     clearText();
-                } else if (contato.length() != 11) {
-                    Toast.makeText(RegisterUsuarioActivity.this, "Número de Telefone Inválido", Toast.LENGTH_SHORT).show();
-                    clearText();
-                } else if (!senha.equals(senhaConfirm)) {
+                }else if (!senha.equals(senhaConfirm)) {
                     Toast.makeText(RegisterUsuarioActivity.this, "Senhas não correspondentes", Toast.LENGTH_SHORT).show();
                     clearText();
                 } else {
-                    usuario = new Usuario(nome, contato, login, senha);
+                    usuario = new Usuario(nome, login, senha);
                     try {
                         SugarContext.init(RegisterUsuarioActivity.this);
                         usuario.save();

@@ -15,6 +15,8 @@ import android.widget.Spinner;
 
 import com.example.jeconomy.R;
 import com.example.jeconomy.adapter.ContasAdapter;
+import com.example.jeconomy.dialog.ReceitaDialog;
+import com.example.jeconomy.models.Despesa;
 import com.example.jeconomy.models.Receita;
 import com.orm.SugarContext;
 
@@ -64,13 +66,25 @@ public class ReceitaFragment extends Fragment {
         return view;
     }
 
-    private void updateRecycleView(int isPago){
+    private void updateRecycleView(int isPago) {
         try {
             SugarContext.init(getContext());
             listReceita = Receita.find(Receita.class, "IS_PAGO = ?", "" + isPago);
             SugarContext.terminate();
             if (listReceita != null) {
                 ContasAdapter adapter = new ContasAdapter(getContext(), listReceita, 'R');
+                adapter.setControlConta(new ContasAdapter.ControlConta() {
+                    @Override
+                    public void openDespesaDialog(Despesa despesa) {
+
+                    }
+
+                    @Override
+                    public void openReceitaDialog(Receita receita) {
+                        ReceitaDialog dialog = new ReceitaDialog(receita);
+                        dialog.show(getFragmentManager(), "Relatorio: Receita");
+                    }
+                });
                 rvReceita.setAdapter(adapter);
             }
         } catch (Exception e) {
