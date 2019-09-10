@@ -14,7 +14,6 @@ import com.example.jeconomy.R;
 import com.example.jeconomy.models.Receita;
 
 import java.text.DateFormat;
-import java.util.Date;
 
 public class ReceitaDialog extends AppCompatDialogFragment {
     private TextView tvCategoria, tvDataPag, tvDataVenc, tvValor, tvDescon, tvValorTotal, tvFormaPag,

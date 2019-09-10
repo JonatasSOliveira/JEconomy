@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="20dp"
+    tools:context=".PagamentoActivity">
+
+    <TextView
+        android:id="@+id/tv_pagamento_pagamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Pagamento"
+        android:textAlignment="center"
+        android:textSize="30sp" />
 
 
     <ScrollView
@@ -15,7 +28,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv_pagamento_pagamento"
+                android:id="@+id/tv_categoria_pagamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -24,96 +37,101 @@
                 android:text="Categoria:" />
 
             <TextView
-                android:id="@+id/tv_infocategoria_despesadialog"
+                android:id="@+id/tv_infocategoria_pagamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/tv_pagamento_pagamento"
+                android:layout_toEndOf="@+id/tv_categoria_pagamento"
                 android:paddingStart="5dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="Nome" />
 
             <TextView
-                android:id="@+id/tv_datapag_despesadialog"
+                android:id="@+id/tv_datapag_pagamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_pagamento_pagamento"
+                android:layout_below="@+id/tv_categoria_pagamento"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="Data Pagamento:" />
 
             <TextView
-                android:id="@+id/tv_infodatapaga_despesadialog"
+                android:id="@+id/tv_infodatapaga_pagamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_infocategoria_despesadialog"
-                android:layout_toEndOf="@+id/tv_datapag_despesadialog"
+                android:layout_below="@+id/tv_infocategoria_pagamento"
+                android:layout_toEndOf="@+id/tv_datapag_pagamento"
                 android:paddingStart="5dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="Não Paga" />
 
             <TextView
-                android:id="@+id/tv_datavenc_despesadialog"
+                android:id="@+id/tv_datavenc_pagamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_datapag_despesadialog"
+                android:layout_below="@+id/tv_datapag_pagamento"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="Data Vencimento:" />
 
             <TextView
-                android:id="@+id/tv_infodatavenc_despesadialog"
+                android:id="@+id/tv_infodatavenc_pagamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_infodatapaga_despesadialog"
-                android:layout_toEndOf="@+id/tv_datavenc_despesadialog"
+                android:layout_below="@+id/tv_infodatapaga_pagamento"
+                android:layout_toEndOf="@+id/tv_datavenc_pagamento"
                 android:paddingStart="5dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="Pagamento à Vista" />
 
             <TextView
-                android:id="@+id/tv_valor_despesadialog"
+                android:id="@+id/tv_valor_pagamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_infodatavenc_despesadialog"
+                android:layout_below="@+id/tv_infodatavenc_pagamento"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="Valor: " />
 
             <TextView
-                android:id="@+id/tv_infovalor_despesadialog"
+                android:id="@+id/tv_infovalor_pagamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_infodatavenc_despesadialog"
-                android:layout_toEndOf="@+id/tv_valor_despesadialog"
+                android:layout_below="@+id/tv_infodatavenc_pagamento"
+                android:layout_toEndOf="@+id/tv_valor_pagamento"
                 android:paddingStart="5dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="Valor" />
 
-            <TextView
-                android:id="@+id/tv_formapag_despesadialog"
+            <Button
+                android:id="@+id/btn_data_pagamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_valor_despesadialog"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="Forma de Pagamento " />
+                android:layout_below="@+id/tv_valor_pagamento"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/escolher" />
 
-            <TextView
-                android:id="@+id/tv_infoformapag_despesadialog"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_data_pagamento"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_infovalor_despesadialog"
-                android:layout_toEndOf="@+id/tv_formapag_despesadialog"
-                android:paddingStart="5dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="Não Paga" />
+                android:layout_below="@+id/tv_valor_pagamento"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/btn_data_pagamento">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Data do Pagamento" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </RelativeLayout>
     </ScrollView>
+
 </LinearLayout>

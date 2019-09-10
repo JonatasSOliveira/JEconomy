@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jeconomy.dialog.DatePickerFragment;
+import com.example.jeconomy.dialog.RegisterCategoriaDialog;
 import com.example.jeconomy.models.Categoria;
 import com.example.jeconomy.models.Despesa;
 import com.example.jeconomy.models.Usuario;
@@ -26,7 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class RegisterDespesaActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class RegisterDespesaActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, RegisterCategoriaDialog.OnInputSelected {
 
     private Spinner spCategoria, spFormaPag, spTipoDespesa;
     private List<Categoria> listCategoria;
@@ -56,25 +57,16 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         Bundle bundle = getIntent().getBundleExtra("home");
         usuario = (Usuario) bundle.getSerializable("user");
 
-        String[] listNome, listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "À PAGAR"};
+        String[] listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "À PAGAR"};
 
         try {
-            SugarContext.init(RegisterDespesaActivity.this);
-            listCategoria = Categoria.listAll(Categoria.class);
-            SugarContext.terminate();
-            listNome = new String[listCategoria.size() + 1];
-            listNome[0] = "ESCOLHA";
 
-            for (int c = 0; c < listCategoria.size(); c++) {
-                listNome[c + 1] = listCategoria.get(c).getNome();
-            }
+            updateCategoria();
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterDespesaActivity.this,
-                    android.R.layout.simple_spinner_item, listNome);
-            spCategoria.setAdapter(arrayAdapter);
-            arrayAdapter = new ArrayAdapter<>(RegisterDespesaActivity.this,
                     android.R.layout.simple_spinner_item, listFormaPag);
             spFormaPag.setAdapter(arrayAdapter);
+
             arrayAdapter = new ArrayAdapter<>(RegisterDespesaActivity.this,
                     android.R.layout.simple_spinner_item, listTipo);
             spTipoDespesa.setAdapter(arrayAdapter);
@@ -92,6 +84,20 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                         spFormaPag.setVisibility(View.INVISIBLE);
                         tvFormaPag.setVisibility(View.INVISIBLE);
                         spFormaPag.setEnabled(false);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                }
+            });
+
+            spCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (i == 1) {
+                        RegisterCategoriaDialog dialog = new RegisterCategoriaDialog();
+                        dialog.show(getSupportFragmentManager(), "Cadastro Categoria");
                     }
                 }
 
@@ -143,6 +149,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                             SugarContext.init(RegisterDespesaActivity.this);
                             despesa.save();
                             SugarContext.terminate();
+                            limparCampos();
                             Toast.makeText(RegisterDespesaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             System.err.println("<===========================================================>");
@@ -173,5 +180,49 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         String dateSelected = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
         tilData.getEditText().setText(dateSelected);
         date = calendar.getTime();
+    }
+
+    private void limparCampos() {
+        spCategoria.setSelection(0);
+        spFormaPag.setSelection(0);
+        spTipoDespesa.setSelection(0);
+        tilData.getEditText().setText("");
+        tilValor.getEditText().setText("");
+    }
+
+    private void updateCategoria() {
+        String[] listNome;
+
+        SugarContext.init(RegisterDespesaActivity.this);
+        listCategoria = Categoria.listAll(Categoria.class);
+        SugarContext.terminate();
+        listNome = new String[listCategoria.size() + 2];
+        listNome[0] = "ESCOLHA";
+        listNome[1] = "NOVA CATEGORIA";
+
+        for (int c = 0; c < listCategoria.size(); c++) {
+            listNome[c + 2] = listCategoria.get(c).getNome();
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterDespesaActivity.this,
+                android.R.layout.simple_spinner_item, listNome);
+        spCategoria.setAdapter(arrayAdapter);
+    }
+
+    @Override
+    public void sendInput(String input, Categoria categoria) {
+        try {
+            SugarContext.init(RegisterDespesaActivity.this);
+            categoria = new Categoria(input);
+            categoria.save();
+
+        } catch (Exception e) {
+            System.err.println("<=====================================>");
+            e.printStackTrace();
+            System.err.println("<=====================================>");
+        } finally {
+            SugarContext.terminate();
+            updateCategoria();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.jeconomy.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.jeconomy.PagamentoActivity;
 import com.example.jeconomy.R;
 import com.example.jeconomy.adapter.ContasAdapter;
 import com.example.jeconomy.dialog.DespesaDialog;

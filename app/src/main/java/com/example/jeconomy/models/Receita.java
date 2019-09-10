@@ -2,9 +2,10 @@ package com.example.jeconomy.models;
 
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Receita extends SugarRecord {
+public class Receita extends SugarRecord implements Serializable {
 
     private String tipoReceita;
     private Categoria categoria;

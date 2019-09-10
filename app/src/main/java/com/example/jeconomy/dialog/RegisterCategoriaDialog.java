@@ -66,7 +66,12 @@ public class RegisterCategoriaDialog extends AppCompatDialogFragment {
         super.onAttach(context);
 
         try {
-            onInputSelected = (OnInputSelected) getTargetFragment();
+            if(getTargetFragment() != null) {
+                onInputSelected = (OnInputSelected) getTargetFragment();
+            }
+            else {
+                onInputSelected = (OnInputSelected) getActivity();
+            }
         } catch (ClassCastException e) {
             e.printStackTrace();
         }

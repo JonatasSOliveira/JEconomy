@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jeconomy.dialog.DatePickerFragment;
+import com.example.jeconomy.dialog.RegisterCategoriaDialog;
 import com.example.jeconomy.models.Categoria;
 import com.example.jeconomy.models.Receita;
 import com.example.jeconomy.models.Usuario;
@@ -28,7 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class RegisterReceitaActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class RegisterReceitaActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, RegisterCategoriaDialog.OnInputSelected {
 
     private Spinner spCategoria, spTipoPag, spTipo, spFormaPag;
     private List<Categoria> listCategoria;
@@ -61,7 +62,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         Bundle bundle = getIntent().getBundleExtra("home");
         usuario = (Usuario) bundle.getSerializable("user");
 
-        String[] arrCategoria, arrTipoPag = {"PAGA", "À PAGAR"}, arrTipo = {"VENDA", "SERVIÇO"};
+        String[] arrTipoPag = {"PAGA", "À PAGAR"}, arrTipo = {"VENDA", "SERVIÇO"};
         String[] arrFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"};
 
         tilDataPv.setHint("DATA DE PAGAMENTO");
@@ -71,26 +72,16 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         tilDescon.getEditText().setText("0");
 
         try {
-            SugarContext.init(RegisterReceitaActivity.this);
-            listCategoria = Categoria.listAll(Categoria.class);
-            SugarContext.terminate();
-
-            arrCategoria = new String[listCategoria.size() + 1];
-            arrCategoria[0] = "ESCOLHA";
-
-            for (int c = 0; c < listCategoria.size(); c++) {
-                arrCategoria[c + 1] = listCategoria.get(c).getNome();
-            }
+            updateCategoria();
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterReceitaActivity.this,
-                    android.R.layout.simple_spinner_item, arrCategoria);
-            spCategoria.setAdapter(arrayAdapter);
-            arrayAdapter = new ArrayAdapter<>(RegisterReceitaActivity.this,
                     android.R.layout.simple_spinner_item, arrTipoPag);
             spTipoPag.setAdapter(arrayAdapter);
+
             arrayAdapter = new ArrayAdapter<>(RegisterReceitaActivity.this,
                     android.R.layout.simple_spinner_item, arrTipo);
             spTipo.setAdapter(arrayAdapter);
+
             arrayAdapter = new ArrayAdapter<>(RegisterReceitaActivity.this,
                     android.R.layout.simple_spinner_item, arrFormaPag);
             spFormaPag.setAdapter(arrayAdapter);
@@ -220,6 +211,20 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                 }
             });
 
+            spCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (i == 1) {
+                        RegisterCategoriaDialog dialog = new RegisterCategoriaDialog();
+                        dialog.show(getSupportFragmentManager(), "Cadastro Categoria");
+                    }   
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                }
+            });
+
             btnCadastrar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -272,6 +277,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                             SugarContext.terminate();
                             Toast.makeText(RegisterReceitaActivity.this, "Salvo com Sucesso",
                                     Toast.LENGTH_SHORT).show();
+                            limparCampos();
                         } catch (Exception e) {
                             System.err.println("<===========================================================>");
                             e.printStackTrace();
@@ -306,6 +312,55 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         } else {
             tilDataSv.getEditText().setText(data);
             dataSv = calendar.getTime();
+        }
+    }
+
+    private void limparCampos() {
+        String tv = "Valor Total: R$ 0,00";
+        spCategoria.setSelection(0);
+        spTipoPag.setSelection(0);
+        spTipo.setSelection(0);
+        spFormaPag.setSelection(0);
+        tilDataPv.getEditText().setText("");
+        tilDataSv.getEditText().setText("");
+        tilValor.getEditText().setText("");
+        tilDescon.getEditText().setText("");
+        tvValorTotal.setText(tv);
+    }
+
+    private void updateCategoria() {
+        String[] listNome;
+
+        SugarContext.init(RegisterReceitaActivity.this);
+        listCategoria = Categoria.listAll(Categoria.class);
+        SugarContext.terminate();
+        listNome = new String[listCategoria.size() + 2];
+        listNome[0] = "ESCOLHA";
+        listNome[1] = "NOVA CATEGORIA";
+
+        for (int c = 0; c < listCategoria.size(); c++) {
+            listNome[c + 2] = listCategoria.get(c).getNome();
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterReceitaActivity.this,
+                android.R.layout.simple_spinner_item, listNome);
+        spCategoria.setAdapter(arrayAdapter);
+    }
+
+    @Override
+    public void sendInput(String input, Categoria categoria) {
+        try {
+            SugarContext.init(RegisterReceitaActivity.this);
+            categoria = new Categoria(input);
+            categoria.save();
+
+        } catch (Exception e) {
+            System.err.println("<=====================================>");
+            e.printStackTrace();
+            System.err.println("<=====================================>");
+        } finally {
+            SugarContext.terminate();
+            updateCategoria();
         }
     }
 }
