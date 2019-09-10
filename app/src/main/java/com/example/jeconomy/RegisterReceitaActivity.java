@@ -217,7 +217,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                     if (i == 1) {
                         RegisterCategoriaDialog dialog = new RegisterCategoriaDialog();
                         dialog.show(getSupportFragmentManager(), "Cadastro Categoria");
-                    }   
+                    }
                 }
 
                 @Override
