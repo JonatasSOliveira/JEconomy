@@ -19,6 +19,8 @@ import com.example.jeconomy.dialog.ReceitaDialog;
 import com.example.jeconomy.models.Despesa;
 import com.example.jeconomy.models.Receita;
 import com.orm.SugarContext;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import java.util.List;
 
@@ -68,15 +70,21 @@ public class ReceitaFragment extends Fragment {
 
     private void updateRecycleView(int isPago) {
         try {
+            String order;
+            if (isPago == 1) {
+                order = "data_pag Desc";
+            } else {
+                order = "data_venc Desc";
+            }
+
             SugarContext.init(getContext());
-            listReceita = Receita.find(Receita.class, "IS_PAGO = ?", "" + isPago);
+            listReceita = Select.from(Receita.class).where(Condition.prop("is_pago").eq(isPago)).orderBy(order).list();
             SugarContext.terminate();
             if (listReceita != null) {
                 ContasAdapter adapter = new ContasAdapter(getContext(), listReceita, 'R');
                 adapter.setControlConta(new ContasAdapter.ControlConta() {
                     @Override
                     public void openDespesaDialog(Despesa despesa) {
-
                     }
 
                     @Override

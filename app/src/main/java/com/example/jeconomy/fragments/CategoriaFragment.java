@@ -17,6 +17,8 @@ import com.example.jeconomy.adapter.CategoriaAdapter;
 import com.example.jeconomy.dialog.RegisterCategoriaDialog;
 import com.example.jeconomy.models.Categoria;
 import com.orm.SugarContext;
+import com.orm.query.Select;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +95,7 @@ public class CategoriaFragment extends Fragment implements RegisterCategoriaDial
     private void updateRecycleView(){
         try{
             SugarContext.init(getContext());
-            listCategoria = Categoria.listAll(Categoria.class);
+            listCategoria = Select.from(Categoria.class).orderBy("nome").list();
             SugarContext.terminate();
             if(listCategoria != null){
                 CategoriaAdapter adapter = new CategoriaAdapter(getActivity(), listCategoria);

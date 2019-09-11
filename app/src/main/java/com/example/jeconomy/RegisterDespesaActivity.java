@@ -21,6 +21,7 @@ import com.example.jeconomy.models.Despesa;
 import com.example.jeconomy.models.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarContext;
+import com.orm.query.Select;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -60,7 +61,6 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         String[] listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "À PAGAR"};
 
         try {
-
             updateCategoria();
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterDespesaActivity.this,
@@ -129,7 +129,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         double valor = Double.parseDouble(auxValor);
-                        Categoria categoria = listCategoria.get(categoriaItem - 1);
+                        Categoria categoria = listCategoria.get(categoriaItem - 2);
                         Despesa despesa = new Despesa(valor, categoria, usuario);
 
                         if (spTipoDespesa.getSelectedItemPosition() == 0) {
@@ -145,18 +145,9 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                             despesa.setPago(false);
                             despesa.setDataVenc(date);
                         }
-                        try {
-                            SugarContext.init(RegisterDespesaActivity.this);
-                            despesa.save();
-                            SugarContext.terminate();
-                            limparCampos();
-                            Toast.makeText(RegisterDespesaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
-                        } catch (Exception e) {
-                            System.err.println("<===========================================================>");
-                            e.printStackTrace();
-                            System.err.println("<===========================================================>");
-                            Toast.makeText(RegisterDespesaActivity.this, "UM ERRO OCORREU", Toast.LENGTH_SHORT).show();
-                        }
+
+                        salvar(despesa);
+
                     }
                 }
             });
@@ -173,14 +164,38 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        String dateSelected = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
-        tilData.getEditText().setText(dateSelected);
-        date = calendar.getTime();
+
+        Calendar hoje = Calendar.getInstance();
+        Calendar dateSelected = Calendar.getInstance();
+        dateSelected.set(Calendar.YEAR, year);
+        dateSelected.set(Calendar.MONTH, month);
+        dateSelected.set(Calendar.DAY_OF_MONTH, day);
+
+        if (spTipoDespesa.getSelectedItemPosition() == 1) {
+            if (dateSelected.get(Calendar.YEAR) < hoje.get(Calendar.YEAR)
+                    || dateSelected.get(Calendar.MONTH) < hoje.get(Calendar.MONTH)
+                    || dateSelected.get(Calendar.DAY_OF_MONTH) <= hoje.get(Calendar.DAY_OF_MONTH)) {
+                Toast.makeText(this, "Selecione uma data posterior ao dia atual", Toast.LENGTH_SHORT).show();
+            } else {
+                setDate(dateSelected);
+            }
+        } else {
+            if (dateSelected.get(Calendar.YEAR) > hoje.get(Calendar.YEAR)
+                    || dateSelected.get(Calendar.MONTH) > hoje.get(Calendar.MONTH)
+                    || dateSelected.get(Calendar.DAY_OF_MONTH) > hoje.get(Calendar.DAY_OF_MONTH)) {
+                Toast.makeText(this, "Selecione o dia atual ou anterior", Toast.LENGTH_SHORT).show();
+            } else {
+                setDate(dateSelected);
+            }
+        }
     }
+
+    private void setDate(Calendar dateSelected){
+        String date = DateFormat.getDateInstance(DateFormat.SHORT).format(dateSelected.getTime());
+        tilData.getEditText().setText(date);
+        this.date = dateSelected.getTime();
+    }
+
 
     private void limparCampos() {
         spCategoria.setSelection(0);
@@ -194,7 +209,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         String[] listNome;
 
         SugarContext.init(RegisterDespesaActivity.this);
-        listCategoria = Categoria.listAll(Categoria.class);
+        listCategoria = Select.from(Categoria.class).orderBy("nome").list();
         SugarContext.terminate();
         listNome = new String[listCategoria.size() + 2];
         listNome[0] = "ESCOLHA";
@@ -223,6 +238,21 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         } finally {
             SugarContext.terminate();
             updateCategoria();
+        }
+    }
+
+    private void salvar(Despesa despesa) {
+        try {
+            SugarContext.init(RegisterDespesaActivity.this);
+            despesa.save();
+            SugarContext.terminate();
+            limparCampos();
+            Toast.makeText(RegisterDespesaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            System.err.println("<===========================================================>");
+            e.printStackTrace();
+            System.err.println("<===========================================================>");
+            Toast.makeText(RegisterDespesaActivity.this, "UM ERRO OCORREU", Toast.LENGTH_SHORT).show();
         }
     }
 }

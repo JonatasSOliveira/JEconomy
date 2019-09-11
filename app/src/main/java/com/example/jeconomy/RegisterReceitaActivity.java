@@ -23,6 +23,7 @@ import com.example.jeconomy.models.Receita;
 import com.example.jeconomy.models.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarContext;
+import com.orm.query.Select;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -38,7 +39,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
     private Button btnDataPv, btnDataSv, btnCadastrar;
     private Usuario usuario;
     private Date dataPv, dataSv;
-    private byte dateSelected;
+    private byte dateOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +126,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
             btnDataPv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dateSelected = 0;
+                    dateOption = 0;
                     DatePickerFragment datePicker = new DatePickerFragment();
                     datePicker.show(getSupportFragmentManager(), "date picker");
                 }
@@ -134,7 +135,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
             btnDataSv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dateSelected = 1;
+                    dateOption = 1;
                     DatePickerFragment datePicker = new DatePickerFragment();
                     datePicker.show(getSupportFragmentManager(), "date picker");
                 }
@@ -147,24 +148,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    String auxValor = tilValor.getEditText().getText().toString();
-                    String auxDescon = tilDescon.getEditText().getText().toString();
-                    String tv;
-
-                    if (!auxValor.isEmpty()) {
-                        double valor = Double.parseDouble(auxValor);
-                        if (!auxDescon.isEmpty()) {
-                            double descon = Double.parseDouble(auxDescon);
-                            descon = (descon / 100) * valor;
-                            tv = "Valor Total: R$" + (valor - descon);
-
-                        } else {
-                            tv = "Valor Total: R$" + valor;
-                        }
-                    } else {
-                        tv = "Valor Total: R$ 0,00";
-                    }
-                    tvValorTotal.setText(tv);
+                    updateValor();
                 }
 
                 @Override
@@ -179,24 +163,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    String auxValor = tilValor.getEditText().getText().toString();
-                    String auxDescon = tilDescon.getEditText().getText().toString();
-                    String tv;
-
-                    if (!auxValor.isEmpty()) {
-                        double valor = Double.parseDouble(auxValor);
-                        if (!auxDescon.isEmpty()) {
-                            double descon = Double.parseDouble(auxDescon);
-                            descon = (descon / 100) * valor;
-                            tv = "Valor Total: R$" + (valor - descon);
-
-                        } else {
-                            tv = "Valor Total: R$" + valor;
-                        }
-                    } else {
-                        tv = "Valor Total: R$ 0,00";
-                    }
-                    tvValorTotal.setText(tv);
+                    updateValor();
                 }
 
                 @Override
@@ -271,20 +238,8 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                             receita.setDataVenc(dataPv);
                         }
 
-                        try {
-                            SugarContext.init(RegisterReceitaActivity.this);
-                            receita.save();
-                            SugarContext.terminate();
-                            Toast.makeText(RegisterReceitaActivity.this, "Salvo com Sucesso",
-                                    Toast.LENGTH_SHORT).show();
-                            limparCampos();
-                        } catch (Exception e) {
-                            System.err.println("<===========================================================>");
-                            e.printStackTrace();
-                            System.err.println("<===========================================================>");
-                            Toast.makeText(RegisterReceitaActivity.this, "Um Erro Ocorreu",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        save(receita);
+
                     }
                 }
             });
@@ -301,19 +256,49 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        String data = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
-        if (dateSelected == 0) {
-            tilDataPv.getEditText().setText(data);
-            dataPv = calendar.getTime();
+
+        Calendar hoje = Calendar.getInstance();
+        Calendar dateSelected = Calendar.getInstance();
+        dateSelected.set(Calendar.YEAR, year);
+        dateSelected.set(Calendar.MONTH, month);
+        dateSelected.set(Calendar.DAY_OF_MONTH, day);
+
+        if (spTipoPag.getSelectedItemPosition() == 1 || spTipo.getSelectedItemPosition() == 0) {
+            if (dateSelected.get(Calendar.YEAR) < hoje.get(Calendar.YEAR)
+                    || dateSelected.get(Calendar.MONTH) < hoje.get(Calendar.MONTH)
+                    || dateSelected.get(Calendar.DAY_OF_MONTH) <= hoje.get(Calendar.DAY_OF_MONTH)) {
+                Toast.makeText(this, "Selecione uma data de vencimento posterior ao dia atual",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                setDate(dateSelected, dateOption);
+            }
         } else {
-            tilDataSv.getEditText().setText(data);
-            dataSv = calendar.getTime();
+            if (dateSelected.get(Calendar.YEAR) > hoje.get(Calendar.YEAR)
+                    || dateSelected.get(Calendar.MONTH) > hoje.get(Calendar.MONTH)
+                    || dateSelected.get(Calendar.DAY_OF_MONTH) > hoje.get(Calendar.DAY_OF_MONTH)) {
+                Toast.makeText(this, "Selecione uma data de pagamento atual ou anterior",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                setDate(dateSelected, dateOption);
+            }
         }
+        if (spTipo.getSelectedItemPosition() == 1) {
+            setDate(dateSelected, dateOption);
+        }
+
     }
+
+    private void setDate(Calendar dateSelected, int dateOption) {
+        String data = DateFormat.getDateInstance(DateFormat.SHORT).format(dateSelected.getTime());
+        tilDataPv.getEditText().setText(data);
+        if (dateOption == 0) {
+            dataPv = dateSelected.getTime();
+        } else {
+            dataSv = dateSelected.getTime();
+        }
+
+    }
+
 
     private void limparCampos() {
         String tv = "Valor Total: R$ 0,00";
@@ -332,7 +317,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         String[] listNome;
 
         SugarContext.init(RegisterReceitaActivity.this);
-        listCategoria = Categoria.listAll(Categoria.class);
+        listCategoria = Select.from(Categoria.class).orderBy("nome").list();
         SugarContext.terminate();
         listNome = new String[listCategoria.size() + 2];
         listNome[0] = "ESCOLHA";
@@ -363,4 +348,43 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
             updateCategoria();
         }
     }
+
+    private void save(Receita receita) {
+        try {
+            SugarContext.init(RegisterReceitaActivity.this);
+            receita.save();
+            SugarContext.terminate();
+            Toast.makeText(RegisterReceitaActivity.this, "Salvo com Sucesso",
+                    Toast.LENGTH_SHORT).show();
+            limparCampos();
+        } catch (Exception e) {
+            System.err.println("<===========================================================>");
+            e.printStackTrace();
+            System.err.println("<===========================================================>");
+            Toast.makeText(RegisterReceitaActivity.this, "Um Erro Ocorreu",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateValor() {
+        String auxValor = tilValor.getEditText().getText().toString();
+        String auxDescon = tilDescon.getEditText().getText().toString();
+        String tv;
+
+        if (!auxValor.isEmpty()) {
+            double valor = Double.parseDouble(auxValor);
+            if (!auxDescon.isEmpty()) {
+                double descon = Double.parseDouble(auxDescon);
+                descon = (descon / 100) * valor;
+                tv = "Valor Total: R$" + (valor - descon);
+
+            } else {
+                tv = "Valor Total: R$" + valor;
+            }
+        } else {
+            tv = "Valor Total: R$ 0,00";
+        }
+        tvValorTotal.setText(tv);
+    }
+
 }

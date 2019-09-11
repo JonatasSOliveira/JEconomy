@@ -14,7 +14,7 @@ import com.orm.SugarContext;
 
 public class RegisterUsuarioActivity extends AppCompatActivity {
 
-    private TextInputLayout tilNome, tilContato, tilLogin, tilSenha, tilSenhaConfirm;
+    private TextInputLayout tilNome, tilLogin, tilSenha, tilSenhaConfirm;
     private Button btnCadastrar;
     private Usuario usuario;
 
@@ -69,7 +69,6 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
 
     private void clearText() {
         tilNome.getEditText().setText("");
-        tilContato.getEditText().setText("");
         tilLogin.getEditText().setText("");
         tilSenha.getEditText().setText("");
         tilSenhaConfirm.getEditText().setText("");
