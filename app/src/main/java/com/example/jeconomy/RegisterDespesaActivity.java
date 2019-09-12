@@ -188,7 +188,8 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         } else {
             if (dateSelected.get(Calendar.YEAR) > hoje.get(Calendar.YEAR)
                     || dateSelected.get(Calendar.MONTH) > hoje.get(Calendar.MONTH)
-                    || dateSelected.get(Calendar.DAY_OF_MONTH) > hoje.get(Calendar.DAY_OF_MONTH)) {
+                    || (dateSelected.get(Calendar.MONTH) == hoje.get(Calendar.MONTH) &&
+                    dateSelected.get(Calendar.DAY_OF_MONTH) > hoje.get(Calendar.DAY_OF_MONTH))) {
                 Toast.makeText(this, "Selecione o dia atual ou anterior", Toast.LENGTH_SHORT).show();
             } else {
                 setDate(dateSelected);

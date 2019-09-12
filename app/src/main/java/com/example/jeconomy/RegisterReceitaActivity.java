@@ -208,7 +208,13 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                         Toast.makeText(RegisterReceitaActivity.this, "Preencha Todos os Campos",
                                 Toast.LENGTH_SHORT).show();
                     } else {
-                        Categoria categoria = listCategoria.get(auxCategoria - 1);
+                        Categoria categoria = listCategoria.get(auxCategoria - 2);
+
+                        if(!categoria.isUsed()){
+                            categoria.setUsed(true);
+                            salvar(categoria);
+                        }
+
                         double valor = Double.parseDouble(auxValor);
                         double descon = Double.parseDouble(auxDescon);
                         double valorTotal = valor - (valor * descon / 100);
@@ -275,7 +281,8 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         } else {
             if (dateSelected.get(Calendar.YEAR) > hoje.get(Calendar.YEAR)
                     || dateSelected.get(Calendar.MONTH) > hoje.get(Calendar.MONTH)
-                    || dateSelected.get(Calendar.DAY_OF_MONTH) > hoje.get(Calendar.DAY_OF_MONTH)) {
+                    || (dateSelected.get(Calendar.MONTH) == hoje.get(Calendar.MONTH) &&
+                    dateSelected.get(Calendar.DAY_OF_MONTH) > hoje.get(Calendar.DAY_OF_MONTH))) {
                 Toast.makeText(this, "Selecione uma data de pagamento atual ou anterior",
                         Toast.LENGTH_SHORT).show();
             } else {
@@ -385,6 +392,21 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
             tv = "Valor Total: R$ 0,00";
         }
         tvValorTotal.setText(tv);
+    }
+
+    private void salvar(Categoria categoria) {
+        try {
+            SugarContext.init(RegisterDespesaActivity.this);
+            categoria.save();
+            SugarContext.terminate();
+            limparCampos();
+            Toast.makeText(RegisterDespesaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            System.err.println("<===========================================================>");
+            e.printStackTrace();
+            System.err.println("<===========================================================>");
+            Toast.makeText(RegisterDespesaActivity.this, "UM ERRO OCORREU", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
