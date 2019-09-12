@@ -12,6 +12,8 @@ import com.example.jeconomy.models.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarContext;
 
+import java.util.List;
+
 public class RegisterUsuarioActivity extends AppCompatActivity {
 
     private TextInputLayout tilNome, tilLogin, tilSenha, tilSenhaConfirm;
@@ -41,28 +43,42 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
                 if (nome.isEmpty() || login.isEmpty() || senha.isEmpty() || senhaConfirm.isEmpty()) {
                     Toast.makeText(RegisterUsuarioActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                     clearText();
-                }else if (!senha.equals(senhaConfirm)) {
-                    Toast.makeText(RegisterUsuarioActivity.this, "Senhas não correspondentes", Toast.LENGTH_SHORT).show();
-                    clearText();
                 } else {
-                    usuario = new Usuario(nome, login, senha);
                     try {
                         SugarContext.init(RegisterUsuarioActivity.this);
-                        usuario.save();
+                        List<Usuario> listUsuario = Usuario.find(Usuario.class, "login = ?", login);
                         SugarContext.terminate();
-                        Toast.makeText(RegisterUsuarioActivity.this, "Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+
+
+                        Toast.makeText(RegisterUsuarioActivity.this, "Login já usado", Toast.LENGTH_SHORT).show();
                         clearText();
-                        finish();
                     } catch (Exception e) {
-                        System.err.println("<===========================================================>");
-                        e.printStackTrace();
-                        System.err.println("<===========================================================>");
-                        Toast.makeText(RegisterUsuarioActivity.this, "Um erro ocorreu durante o " +
-                                "processo de salvamento\nPor favor, tente novamente", Toast.LENGTH_SHORT).show();
-                        clearText();
+                        if (!senha.equals(senhaConfirm)) {
+                            Toast.makeText(RegisterUsuarioActivity.this, "Senhas não correspondentes", Toast.LENGTH_SHORT).show();
+                            clearText();
+                        } else {
+                            usuario = new Usuario(nome, login, senha);
+                            try {
+                                SugarContext.init(RegisterUsuarioActivity.this);
+                                usuario.save();
+                                SugarContext.terminate();
+                                Toast.makeText(RegisterUsuarioActivity.this, "Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                                clearText();
+                                finish();
+                            } catch (Exception err) {
+                                System.err.println("<===========================================================>");
+                                err.printStackTrace();
+                                System.err.println("<===========================================================>");
+                                Toast.makeText(RegisterUsuarioActivity.this, "Um erro ocorreu durante o " +
+                                        "processo de salvamento\nPor favor, tente novamente", Toast.LENGTH_SHORT).show();
+                                clearText();
+                            }
+
+                        }
                     }
 
                 }
+
             }
         });
     }

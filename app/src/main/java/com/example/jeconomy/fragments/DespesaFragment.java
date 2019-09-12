@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.jeconomy.PagamentoActivity;
 import com.example.jeconomy.R;
 import com.example.jeconomy.adapter.ContasAdapter;
 import com.example.jeconomy.dialog.DespesaDialog;
@@ -80,9 +79,9 @@ public class DespesaFragment extends Fragment {
     private void updateRecycleView(int isPago) {
         try {
             String order;
-            if(isPago == 1){
+            if (isPago == 1) {
                 order = "data_pag Desc";
-            }else{
+            } else {
                 order = "data_venc Desc";
             }
 

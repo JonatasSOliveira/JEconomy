@@ -130,6 +130,12 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                     } else {
                         double valor = Double.parseDouble(auxValor);
                         Categoria categoria = listCategoria.get(categoriaItem - 2);
+
+                        if(!categoria.isUsed()){
+                            categoria.setUsed(true);
+                            salvar(categoria);
+                        }
+
                         Despesa despesa = new Despesa(valor, categoria, usuario);
 
                         if (spTipoDespesa.getSelectedItemPosition() == 0) {
@@ -245,6 +251,21 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         try {
             SugarContext.init(RegisterDespesaActivity.this);
             despesa.save();
+            SugarContext.terminate();
+            limparCampos();
+            Toast.makeText(RegisterDespesaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            System.err.println("<===========================================================>");
+            e.printStackTrace();
+            System.err.println("<===========================================================>");
+            Toast.makeText(RegisterDespesaActivity.this, "UM ERRO OCORREU", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void salvar(Categoria categoria) {
+        try {
+            SugarContext.init(RegisterDespesaActivity.this);
+            categoria.save();
             SugarContext.terminate();
             limparCampos();
             Toast.makeText(RegisterDespesaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();

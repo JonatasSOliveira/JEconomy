@@ -3,15 +3,16 @@ package com.example.jeconomy.fragments;
 import android.app.AlertDialog;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.example.jeconomy.R;
 import com.example.jeconomy.adapter.CategoriaAdapter;
 import com.example.jeconomy.dialog.RegisterCategoriaDialog;
@@ -56,12 +57,11 @@ public class CategoriaFragment extends Fragment implements RegisterCategoriaDial
         return view;
     }
 
-    public void openDialog(Categoria categoria){
+    public void openDialog(Categoria categoria) {
         RegisterCategoriaDialog categoriaDialog;
-        if(categoria == null){
+        if (categoria == null) {
             categoriaDialog = new RegisterCategoriaDialog();
-        }
-        else{
+        } else {
             categoriaDialog = new RegisterCategoriaDialog(categoria);
         }
         categoriaDialog.setTargetFragment(CategoriaFragment.this, 1);
@@ -72,57 +72,54 @@ public class CategoriaFragment extends Fragment implements RegisterCategoriaDial
     public void sendInput(String input, Categoria categoria) {
         try {
             SugarContext.init(getContext());
-            if(categoria == null){
+            if (categoria == null) {
                 categoria = new Categoria(input);
                 categoria.save();
-            }
-            else{
+            } else {
                 categoria.setNome(input);
                 categoria.save();
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.err.println("<=====================================>");
             e.printStackTrace();
             System.err.println("<=====================================>");
-        }finally {
+        } finally {
             SugarContext.terminate();
             updateRecycleView();
         }
 
     }
 
-    private void updateRecycleView(){
-        try{
+    private void updateRecycleView() {
+        try {
             SugarContext.init(getContext());
             listCategoria = Select.from(Categoria.class).orderBy("nome").list();
             SugarContext.terminate();
-            if(listCategoria != null){
+            if (listCategoria != null) {
                 CategoriaAdapter adapter = new CategoriaAdapter(getActivity(), listCategoria);
                 rvCategoria.setAdapter(adapter);
                 adapter.setControlCategoria(new CategoriaAdapter.ControlCategoria() {
                     @Override
                     public void deleteCategoria(Categoria categoria) {
-                        try{
+                        try {
                             SugarContext.init(getContext());
                             categoria.delete();
                             updateRecycleView();
                             SugarContext.terminate();
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             System.err.println("<=====================================>");
                             e.printStackTrace();
                             System.err.println("<=====================================>");
                         }
                     }
+
                     @Override
                     public void editCategoria(Categoria categoria) {
                         openDialog(categoria);
                     }
                 });
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.err.println("<=====================================>");
             e.printStackTrace();
             System.err.println("<=====================================>");

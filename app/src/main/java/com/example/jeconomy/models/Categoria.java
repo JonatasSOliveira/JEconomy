@@ -25,4 +25,12 @@ public class Categoria extends SugarRecord implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
+    }
 }

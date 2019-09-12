@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.jeconomy.R;
 import com.example.jeconomy.models.Categoria;
+
 import java.util.List;
 
 public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyViewHolder> {
@@ -20,16 +23,17 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
     private LayoutInflater layoutInflater;
     private ControlCategoria controlCategoria;
 
-    public void setControlCategoria(ControlCategoria controlCategoria){
+    public void setControlCategoria(ControlCategoria controlCategoria) {
         this.controlCategoria = controlCategoria;
     }
 
     public interface ControlCategoria {
         void deleteCategoria(Categoria categoria);
+
         void editCategoria(Categoria categoria);
     }
 
-    public CategoriaAdapter(Context context, List<Categoria> listCategoria ) {
+    public CategoriaAdapter(Context context, List<Categoria> listCategoria) {
         this.listCategoria = listCategoria;
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -52,12 +56,12 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
         return listCategoria.size();
     }
 
-    public void addListItem(Categoria categoria, int position){
+    public void addListItem(Categoria categoria, int position) {
         listCategoria.add(categoria);
         notifyItemInserted(position);
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvCategoria;
         public ImageButton btnEdit, btnDelete;
 
@@ -72,16 +76,29 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         Categoria categoria = listCategoria.get(position);
                         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                        builder.setTitle("Realmente deseja excluir: " + categoria.getNome() + "?")
-                                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                controlCategoria.deleteCategoria(listCategoria.get(getAdapterPosition()));
-                            }
-                        }).setNegativeButton("Não", null);
+                        String mensagem;
+
+                        if (!categoria.isUsed()) {
+                            mensagem = "Realmente deseja excluir: " + categoria.getNome() + "?";
+
+                            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    controlCategoria.deleteCategoria(listCategoria.get(getAdapterPosition()));
+                                }
+                            }).setNegativeButton("Não", null);
+
+                        } else {
+                            mensagem = "A Categoria " + categoria.getNome() + " está em uso.\n" +
+                                    "Primeiro exclua as contas em que ela é usada";
+
+                            builder.setPositiveButton("Ok", null);
+                        }
+                        builder.setTitle("Aviso").setMessage(mensagem);
+
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     }
@@ -92,7 +109,7 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.MyVi
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         Categoria categoria = listCategoria.get(position);
                         controlCategoria.editCategoria(categoria);
                     }
