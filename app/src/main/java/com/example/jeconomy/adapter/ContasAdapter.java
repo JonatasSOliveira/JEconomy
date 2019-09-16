@@ -34,7 +34,6 @@ public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHold
         this.controlConta = controlConta;
     }
 
-
     public ContasAdapter(Context context, List list, char verif) {
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (verif == 'D') {
@@ -44,7 +43,6 @@ public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHold
         }
 
     }
-
 
     @NonNull
     @Override
@@ -113,5 +111,4 @@ public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHold
 
         }
     }
-
 }

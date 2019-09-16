@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public HomeFragment(Usuario usuario){
+    public HomeFragment(Usuario usuario) {
         this.usuario = usuario;
     }
 
@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        atualizarValores();
+        updateValues();
 
         return view;
     }
@@ -79,11 +79,10 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        atualizarValores();
+        updateValues();
     }
 
-
-    private void atualizarValores(){
+    private void updateValues() {
         double despesaTotal = 0;
         double receitaTotal = 0;
         try {

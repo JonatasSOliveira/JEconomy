@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 String senha = tilSenha.getEditText().getText().toString().trim();
                 if (login.isEmpty() || senha.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Preencha Todos os Campos", Toast.LENGTH_SHORT).show();
-                    clearText();
+                    clearInputs();
                 } else {
                     try {
                         SugarContext.init(LoginActivity.this);
@@ -56,14 +56,14 @@ public class LoginActivity extends AppCompatActivity {
                         SugarContext.terminate();
                         if (!usuario.getSenha().equals(senha)) {
                             Toast.makeText(LoginActivity.this, "Senha Incorreta", Toast.LENGTH_SHORT).show();
-                            clearText();
+                            clearInputs();
                         } else {
                             Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("user", usuario);
                             intent.putExtra("tela_login", bundle);
                             startActivity(intent);
-                            clearText();
+                            clearInputs();
                         }
                     } catch (Exception e) {
                         System.err.println("<===========================================================>");
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void clearText() {
+    private void clearInputs() {
         tilLogin.getEditText().setText("");
         tilSenha.getEditText().setText("");
     }

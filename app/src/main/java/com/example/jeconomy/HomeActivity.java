@@ -1,16 +1,13 @@
 package com.example.jeconomy;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.jeconomy.fragments.CategoriaFragment;
 import com.example.jeconomy.fragments.DespesaFragment;
 import com.example.jeconomy.fragments.HomeFragment;
 import com.example.jeconomy.fragments.ReceitaFragment;
-import com.example.jeconomy.models.Despesa;
+
 import com.example.jeconomy.models.Usuario;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
@@ -122,13 +119,13 @@ public class HomeActivity extends AppCompatActivity
             ft.commit();
             bar = getSupportActionBar();
             bar.setTitle("Categoria");
-        } else if (id == R.id.nav_despesa){
+        } else if (id == R.id.nav_despesa) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fl_home, new DespesaFragment());
             ft.commit();
             bar = getSupportActionBar();
             bar.setTitle("Despesa");
-        } else if (id == R.id.nav_receita){
+        } else if (id == R.id.nav_receita) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fl_home, new ReceitaFragment());
             ft.commit();

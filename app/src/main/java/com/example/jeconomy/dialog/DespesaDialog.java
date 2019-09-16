@@ -77,6 +77,4 @@ public class DespesaDialog extends AppCompatDialogFragment {
 
         return builder.create();
     }
-
-
 }

@@ -1,6 +1,5 @@
 package com.example.jeconomy.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -71,7 +70,6 @@ public class DespesaFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-
 
         return view;
     }

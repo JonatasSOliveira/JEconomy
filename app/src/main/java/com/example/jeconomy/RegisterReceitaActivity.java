@@ -46,19 +46,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_receita);
 
-        spCategoria = findViewById(R.id.sp_categoria_registerreceita);
-        spTipoPag = findViewById(R.id.sp_tipopag_registerreceita);
-        spTipo = findViewById(R.id.sp_tipo_registerreceita);
-        spFormaPag = findViewById(R.id.sp_formapag_registerreceita);
-        tilDataPv = findViewById(R.id.til_datapv_registerreceita);
-        tilDataSv = findViewById(R.id.til_datasv_registerreceita);
-        tilValor = findViewById(R.id.til_valor_registerreceita);
-        tilDescon = findViewById(R.id.til_desconto_registerreceita);
-        tvFormaPag = findViewById(R.id.tv_formapag_registerreceita);
-        tvValorTotal = findViewById(R.id.tv_valortotal_registerreceita);
-        btnDataPv = findViewById(R.id.btn_datapv_registerreceita);
-        btnDataSv = findViewById(R.id.btn_datasv_registerreceita);
-        btnCadastrar = findViewById(R.id.btn_cadastrar_registerreceita);
+        setAttributes();
 
         Bundle bundle = getIntent().getBundleExtra("home");
         usuario = (Usuario) bundle.getSerializable("user");
@@ -91,15 +79,9 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     if (i == 0) {
-                        tilDataPv.setHint("DATA DE PAGAMENTO");
-                        tvFormaPag.setVisibility(View.VISIBLE);
-                        spFormaPag.setVisibility(View.VISIBLE);
-                        spFormaPag.setEnabled(true);
+                        payTypeChange(true);
                     } else {
-                        tilDataPv.setHint("DATA DE VENCIMENTO");
-                        tvFormaPag.setVisibility(View.INVISIBLE);
-                        spFormaPag.setVisibility(View.INVISIBLE);
-                        spFormaPag.setEnabled(false);
+                        payTypeChange(false);
                     }
                 }
 
@@ -116,6 +98,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                     } else {
                         tilDataSv.setHint("DATA DO SERVIÇO");
                     }
+                    tilDataSv.getEditText().setText("");
                 }
 
                 @Override
@@ -210,9 +193,9 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                     } else {
                         Categoria categoria = listCategoria.get(auxCategoria - 2);
 
-                        if(!categoria.isUsed()){
+                        if (!categoria.isUsed()) {
                             categoria.setUsed(true);
-                            salvar(categoria);
+                            save(categoria);
                         }
 
                         double valor = Double.parseDouble(auxValor);
@@ -262,52 +245,45 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-
-        Calendar hoje = Calendar.getInstance();
+        Calendar dateActual = Calendar.getInstance();
         Calendar dateSelected = Calendar.getInstance();
         dateSelected.set(Calendar.YEAR, year);
         dateSelected.set(Calendar.MONTH, month);
         dateSelected.set(Calendar.DAY_OF_MONTH, day);
 
-        if (spTipoPag.getSelectedItemPosition() == 1 || spTipo.getSelectedItemPosition() == 0) {
-            if (dateSelected.get(Calendar.YEAR) < hoje.get(Calendar.YEAR)
-                    || dateSelected.get(Calendar.MONTH) < hoje.get(Calendar.MONTH)
-                    || dateSelected.get(Calendar.DAY_OF_MONTH) <= hoje.get(Calendar.DAY_OF_MONTH)) {
-                Toast.makeText(this, "Selecione uma data de vencimento posterior ao dia atual",
-                        Toast.LENGTH_SHORT).show();
+        if (((spTipoPag.getSelectedItemPosition() == 0
+                && dateOption == 0)
+                || (spTipo.getSelectedItemPosition() == 0
+                && dateOption == 1))
+                && isDateLater(dateSelected, dateActual)) {
+            String aviso;
+            if (dateOption == 1) {
+                aviso = "Selecione uma data de venda atual ou anterior";
             } else {
-                setDate(dateSelected, dateOption);
+                aviso = "Selecione uma data de pagamento atual ou anterior";
             }
+            Toast.makeText(this, aviso, Toast.LENGTH_SHORT).show();
+        } else if (spTipoPag.getSelectedItemPosition() == 1 && isDatePrevious(dateSelected, dateActual)) {
+            Toast.makeText(this, "Selecione uma data de vencimento posterior ao dia atual",
+                    Toast.LENGTH_SHORT).show();
         } else {
-            if (dateSelected.get(Calendar.YEAR) > hoje.get(Calendar.YEAR)
-                    || dateSelected.get(Calendar.MONTH) > hoje.get(Calendar.MONTH)
-                    || (dateSelected.get(Calendar.MONTH) == hoje.get(Calendar.MONTH) &&
-                    dateSelected.get(Calendar.DAY_OF_MONTH) > hoje.get(Calendar.DAY_OF_MONTH))) {
-                Toast.makeText(this, "Selecione uma data de pagamento atual ou anterior",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                setDate(dateSelected, dateOption);
-            }
-        }
-        if (spTipo.getSelectedItemPosition() == 1) {
             setDate(dateSelected, dateOption);
         }
-
     }
 
     private void setDate(Calendar dateSelected, int dateOption) {
         String data = DateFormat.getDateInstance(DateFormat.SHORT).format(dateSelected.getTime());
-        tilDataPv.getEditText().setText(data);
+
         if (dateOption == 0) {
+            tilDataPv.getEditText().setText(data);
             dataPv = dateSelected.getTime();
         } else {
+            tilDataSv.getEditText().setText(data);
             dataSv = dateSelected.getTime();
         }
-
     }
 
-
-    private void limparCampos() {
+    private void clearInputs() {
         String tv = "Valor Total: R$ 0,00";
         spCategoria.setSelection(0);
         spTipoPag.setSelection(0);
@@ -363,7 +339,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
             SugarContext.terminate();
             Toast.makeText(RegisterReceitaActivity.this, "Salvo com Sucesso",
                     Toast.LENGTH_SHORT).show();
-            limparCampos();
+            clearInputs();
         } catch (Exception e) {
             System.err.println("<===========================================================>");
             e.printStackTrace();
@@ -394,19 +370,78 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         tvValorTotal.setText(tv);
     }
 
-    private void salvar(Categoria categoria) {
+    private void save(Categoria categoria) {
         try {
-            SugarContext.init(RegisterDespesaActivity.this);
+            SugarContext.init(RegisterReceitaActivity.this);
             categoria.save();
             SugarContext.terminate();
-            limparCampos();
-            Toast.makeText(RegisterDespesaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
+            clearInputs();
+            Toast.makeText(RegisterReceitaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             System.err.println("<===========================================================>");
             e.printStackTrace();
             System.err.println("<===========================================================>");
-            Toast.makeText(RegisterDespesaActivity.this, "UM ERRO OCORREU", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterReceitaActivity.this, "UM ERRO OCORREU", Toast.LENGTH_SHORT).show();
         }
     }
 
+    private void setAttributes() {
+        spCategoria = findViewById(R.id.sp_categoria_registerreceita);
+        spTipoPag = findViewById(R.id.sp_tipopag_registerreceita);
+        spTipo = findViewById(R.id.sp_tipo_registerreceita);
+        spFormaPag = findViewById(R.id.sp_formapag_registerreceita);
+        tilDataPv = findViewById(R.id.til_datapv_registerreceita);
+        tilDataSv = findViewById(R.id.til_datasv_registerreceita);
+        tilValor = findViewById(R.id.til_valor_registerreceita);
+        tilDescon = findViewById(R.id.til_desconto_registerreceita);
+        tvFormaPag = findViewById(R.id.tv_formapag_registerreceita);
+        tvValorTotal = findViewById(R.id.tv_valortotal_registerreceita);
+        btnDataPv = findViewById(R.id.btn_datapv_registerreceita);
+        btnDataSv = findViewById(R.id.btn_datasv_registerreceita);
+        btnCadastrar = findViewById(R.id.btn_cadastrar_registerreceita);
+    }
+
+    private void payTypeChange(boolean isPago) {
+        if (isPago) {
+            tilDataPv.setHint("DATA DE PAGAMENTO");
+            spFormaPag.setVisibility(View.VISIBLE);
+            tvFormaPag.setVisibility(View.VISIBLE);
+        } else {
+            tilDataPv.setHint("DATA DE VENCIMENTO");
+            spFormaPag.setVisibility(View.INVISIBLE);
+            tvFormaPag.setVisibility(View.INVISIBLE);
+        }
+        tilDataPv.getEditText().setText("");
+        spFormaPag.setEnabled(isPago);
+    }
+
+    private boolean isDateLater(Calendar dateSelected, Calendar dateActual) {
+        int yearSelected = dateSelected.get(Calendar.YEAR);
+        int monthSelected = dateSelected.get(Calendar.MONTH);
+        int daySelected = dateSelected.get(Calendar.DAY_OF_MONTH);
+        int yearActual = dateActual.get(Calendar.YEAR);
+        int monthActual = dateActual.get(Calendar.MONTH);
+        int today = dateActual.get(Calendar.DAY_OF_MONTH);
+
+        return yearSelected > yearActual
+                || yearSelected == yearActual
+                && (monthSelected > monthActual
+                || (monthSelected == monthActual
+                && daySelected > today));
+    }
+
+    private boolean isDatePrevious(Calendar dateSelected, Calendar dateActual) {
+        int yearSelected = dateSelected.get(Calendar.YEAR);
+        int monthSelected = dateSelected.get(Calendar.MONTH);
+        int daySelected = dateSelected.get(Calendar.DAY_OF_MONTH);
+        int yearActual = dateActual.get(Calendar.YEAR);
+        int monthActual = dateActual.get(Calendar.MONTH);
+        int today = dateActual.get(Calendar.DAY_OF_MONTH);
+
+        return yearSelected < yearActual
+                || yearSelected == yearSelected
+                && (monthSelected < monthActual
+                || (monthSelected == monthActual
+                && daySelected <= today));
+    }
 }
