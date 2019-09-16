@@ -1,4 +1,4 @@
-package com.example.jeconomy.dialog;
+package com.example.jeconomy.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

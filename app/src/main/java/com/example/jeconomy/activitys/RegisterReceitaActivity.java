@@ -1,4 +1,4 @@
-package com.example.jeconomy;
+package com.example.jeconomy.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,8 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jeconomy.dialog.DatePickerFragment;
-import com.example.jeconomy.dialog.RegisterCategoriaDialog;
+import com.example.jeconomy.R;
+import com.example.jeconomy.dialogs.DatePickerFragment;
+import com.example.jeconomy.dialogs.RegisterCategoriaDialog;
 import com.example.jeconomy.models.Categoria;
 import com.example.jeconomy.models.Receita;
 import com.example.jeconomy.models.Usuario;
@@ -37,7 +38,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
     private TextInputLayout tilDataPv, tilDataSv, tilValor, tilDescon;
     private TextView tvFormaPag, tvValorTotal;
     private Button btnDataPv, btnDataSv, btnCadastrar;
-    private Usuario usuario;
+    private Usuario user;
     private Date dataPv, dataSv;
     private byte dateOption;
 
@@ -49,7 +50,9 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         setAttributes();
 
         Bundle bundle = getIntent().getBundleExtra("home");
-        usuario = (Usuario) bundle.getSerializable("user");
+        user = (Usuario) bundle.getSerializable("user");
+        long userId = bundle.getLong("user_id");
+        user.setId(userId);
 
         String[] arrTipoPag = {"PAGA", "À PAGAR"}, arrTipo = {"VENDA", "SERVIÇO"};
         String[] arrFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"};
@@ -202,7 +205,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                         double descon = Double.parseDouble(auxDescon);
                         double valorTotal = valor - (valor * descon / 100);
 
-                        Receita receita = new Receita(categoria, valor, descon, valorTotal, usuario);
+                        Receita receita = new Receita(categoria, valor, descon, valorTotal, user);
 
                         int tipo = spTipo.getSelectedItemPosition();
 

@@ -1,7 +1,8 @@
-package com.example.jeconomy;
+package com.example.jeconomy.activitys;
 
 import android.os.Bundle;
 
+import com.example.jeconomy.R;
 import com.example.jeconomy.fragments.CategoriaFragment;
 import com.example.jeconomy.fragments.DespesaFragment;
 import com.example.jeconomy.fragments.HomeFragment;
@@ -18,7 +19,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
-import com.orm.SugarContext;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -29,14 +29,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.Menu;
 import android.widget.TextView;
 
-import java.util.List;
-
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActionBar bar;
     private Usuario usuario;
     private TextView tvNome;
+    private long userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +60,13 @@ public class HomeActivity extends AppCompatActivity
 
         Bundle bundle = getIntent().getBundleExtra("tela_login");
         usuario = (Usuario) bundle.getSerializable("user");
+        userId = bundle.getLong("user_id");
+
         tvNome.setText(usuario.getNome());
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fl_home, new HomeFragment(usuario));
+        ft.replace(R.id.fl_home, new HomeFragment(usuario, userId));
         ft.commit();
-
     }
 
     @Override
@@ -109,7 +109,7 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fl_home, new HomeFragment(usuario));
+            ft.replace(R.id.fl_home, new HomeFragment(usuario, userId));
             ft.commit();
             bar = getSupportActionBar();
             bar.setTitle("Principal");
@@ -121,13 +121,13 @@ public class HomeActivity extends AppCompatActivity
             bar.setTitle("Categoria");
         } else if (id == R.id.nav_despesa) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fl_home, new DespesaFragment());
+            ft.replace(R.id.fl_home, new DespesaFragment(usuario, userId));
             ft.commit();
             bar = getSupportActionBar();
             bar.setTitle("Despesa");
         } else if (id == R.id.nav_receita) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fl_home, new ReceitaFragment());
+            ft.replace(R.id.fl_home, new ReceitaFragment(usuario, userId));
             ft.commit();
             bar = getSupportActionBar();
             bar.setTitle("Receita");

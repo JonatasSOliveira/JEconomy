@@ -1,4 +1,4 @@
-package com.example.jeconomy;
+package com.example.jeconomy.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -14,8 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jeconomy.dialog.DatePickerFragment;
-import com.example.jeconomy.dialog.RegisterCategoriaDialog;
+import com.example.jeconomy.R;
+import com.example.jeconomy.dialogs.DatePickerFragment;
+import com.example.jeconomy.dialogs.RegisterCategoriaDialog;
 import com.example.jeconomy.models.Categoria;
 import com.example.jeconomy.models.Despesa;
 import com.example.jeconomy.models.Usuario;
@@ -36,7 +37,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
     private TextInputLayout tilData, tilValor;
     private Date date;
     private TextView tvFormaPag;
-    private Usuario usuario;
+    private Usuario user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,9 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         tilData.setHint("DATA DE PAGAMENTO");
 
         Bundle bundle = getIntent().getBundleExtra("home");
-        usuario = (Usuario) bundle.getSerializable("user");
+        user = (Usuario) bundle.getSerializable("user");
+        long userId = bundle.getLong("user_id");
+        user.setId(userId);
 
         String[] listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "À PAGAR"};
 
@@ -130,7 +133,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                             save(categoria);
                         }
 
-                        Despesa despesa = new Despesa(valor, categoria, usuario);
+                        Despesa despesa = new Despesa(valor, categoria, user);
 
                         if (spTipoPag.getSelectedItemPosition() == 0) {
                             if (formaPagItem == 1) {

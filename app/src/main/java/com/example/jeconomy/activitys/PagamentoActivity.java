@@ -1,4 +1,4 @@
-package com.example.jeconomy;
+package com.example.jeconomy.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -10,7 +10,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.example.jeconomy.dialog.DatePickerFragment;
+import com.example.jeconomy.R;
+import com.example.jeconomy.dialogs.DatePickerFragment;
 import com.example.jeconomy.models.Despesa;
 import com.google.android.material.textfield.TextInputLayout;
 

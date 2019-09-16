@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.jeconomy.R;
-import com.example.jeconomy.RegisterDespesaActivity;
-import com.example.jeconomy.RegisterReceitaActivity;
+import com.example.jeconomy.activitys.RegisterDespesaActivity;
+import com.example.jeconomy.activitys.RegisterReceitaActivity;
 import com.example.jeconomy.models.Despesa;
 import com.example.jeconomy.models.Receita;
 import com.example.jeconomy.models.Usuario;
@@ -27,14 +27,15 @@ public class HomeFragment extends Fragment {
 
     private Button btnDespesa, btnReceita;
     private TextView tvValorDespesa, tvBalanço, tvValorReceita;
-    private Usuario usuario;
+    private Usuario user;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    public HomeFragment(Usuario usuario) {
-        this.usuario = usuario;
+    public HomeFragment(Usuario user, long userId) {
+        this.user = user;
+        user.setId(userId);
     }
 
 
@@ -54,7 +55,8 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), RegisterDespesaActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("user", usuario);
+                bundle.putSerializable("user", user);
+                bundle.putLong("user_id", user.getId());
                 intent.putExtra("home", bundle);
                 startActivity(intent);
             }
@@ -65,7 +67,8 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), RegisterReceitaActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("user", usuario);
+                bundle.putSerializable("user", user);
+                bundle.putLong("user_id", user.getId());
                 intent.putExtra("home", bundle);
                 startActivity(intent);
             }
@@ -87,7 +90,7 @@ public class HomeFragment extends Fragment {
         double receitaTotal = 0;
         try {
             SugarContext.init(getContext());
-            List<Despesa> listDespesa = Despesa.listAll(Despesa.class);
+            List<Despesa> listDespesa = Despesa.find(Despesa.class, "USUARIO = ?", "" + user.getId());
             SugarContext.terminate();
 
             for (int c = 0; c < listDespesa.size(); c++) {
@@ -105,7 +108,7 @@ public class HomeFragment extends Fragment {
         }
         try {
             SugarContext.init(getContext());
-            List<Receita> listReceita = Receita.listAll(Receita.class);
+            List<Receita> listReceita = Receita.find(Receita.class, "USUARIO = ?", "" + user.getId());
             SugarContext.terminate();
 
             for (int c = 0; c < listReceita.size(); c++) {

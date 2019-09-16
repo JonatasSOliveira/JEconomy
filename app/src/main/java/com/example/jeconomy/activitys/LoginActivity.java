@@ -1,4 +1,4 @@
-package com.example.jeconomy;
+package com.example.jeconomy.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,11 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jeconomy.R;
 import com.example.jeconomy.models.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarContext;
-
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,8 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout tilLogin, tilSenha;
     private Button btnAcessar;
     private Usuario usuario;
-    private List<Usuario> listUsuario;
-    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +49,18 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     try {
                         SugarContext.init(LoginActivity.this);
-                        usuario = (Usuario.find(Usuario.class, "login = ?", new String[]{login})).get(0);
+                        usuario = Usuario.find(Usuario.class, "LOGIN = ?", login).get(0);
                         SugarContext.terminate();
                         if (!usuario.getSenha().equals(senha)) {
                             Toast.makeText(LoginActivity.this, "Senha Incorreta", Toast.LENGTH_SHORT).show();
                             clearInputs();
                         } else {
-                            Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("user", usuario);
+                            bundle.putLong("user_id", usuario.getId());
                             intent.putExtra("tela_login", bundle);
+
                             startActivity(intent);
                             clearInputs();
                         }

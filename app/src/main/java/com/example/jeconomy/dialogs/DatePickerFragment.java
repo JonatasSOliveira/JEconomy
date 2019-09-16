@@ -1,4 +1,4 @@
-package com.example.jeconomy.dialog;
+package com.example.jeconomy.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

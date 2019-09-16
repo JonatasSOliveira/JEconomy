@@ -15,9 +15,10 @@ import android.widget.Spinner;
 
 import com.example.jeconomy.R;
 import com.example.jeconomy.adapter.ContasAdapter;
-import com.example.jeconomy.dialog.ReceitaDialog;
+import com.example.jeconomy.dialogs.ReceitaDialog;
 import com.example.jeconomy.models.Despesa;
 import com.example.jeconomy.models.Receita;
+import com.example.jeconomy.models.Usuario;
 import com.orm.SugarContext;
 import com.orm.query.Condition;
 import com.orm.query.Select;
@@ -29,9 +30,15 @@ public class ReceitaFragment extends Fragment {
     private List<Receita> listReceita;
     private RecyclerView rvReceita;
     private Spinner spTipo;
+    private Usuario user;
 
     public ReceitaFragment() {
         // Required empty public constructor
+    }
+
+    public ReceitaFragment(Usuario user, long id) {
+        this.user = user;
+        user.setId(id);
     }
 
     @Override
@@ -78,7 +85,8 @@ public class ReceitaFragment extends Fragment {
             }
 
             SugarContext.init(getContext());
-            listReceita = Select.from(Receita.class).where(Condition.prop("is_pago").eq(isPago)).orderBy(order).list();
+            listReceita = Select.from(Receita.class).where(Condition.prop("is_pago").eq(isPago),
+                    Condition.prop("usuario").eq(user.getId())).orderBy(order).list();
             SugarContext.terminate();
             if (listReceita != null) {
                 ContasAdapter adapter = new ContasAdapter(getContext(), listReceita, 'R');

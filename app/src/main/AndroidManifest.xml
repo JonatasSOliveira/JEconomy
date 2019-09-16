@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PagamentoActivity"></activity>
+        <activity android:name=".activitys.PagamentoActivity"></activity>
         <activity
-            android:name=".RegisterReceitaActivity"
+            android:name=".activitys.RegisterReceitaActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegisterDespesaActivity"
+            android:name=".activitys.RegisterDespesaActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
@@ -31,7 +31,7 @@
             android:value="com.example.jeconomy.models" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".activitys.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,10 +40,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterUsuarioActivity"
+            android:name=".activitys.RegisterUsuarioActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".activitys.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

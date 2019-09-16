@@ -1,4 +1,4 @@
-package com.example.jeconomy.dialog;
+package com.example.jeconomy.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import java.text.DateFormat;
 
-import com.example.jeconomy.PagamentoActivity;
+import com.example.jeconomy.activitys.PagamentoActivity;
 import com.example.jeconomy.R;
 import com.example.jeconomy.models.Despesa;
 

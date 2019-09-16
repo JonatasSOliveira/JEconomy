@@ -14,12 +14,11 @@ import android.widget.Toast;
 
 import com.example.jeconomy.R;
 import com.example.jeconomy.adapter.CategoriaAdapter;
-import com.example.jeconomy.dialog.RegisterCategoriaDialog;
+import com.example.jeconomy.dialogs.RegisterCategoriaDialog;
 import com.example.jeconomy.models.Categoria;
 import com.orm.SugarContext;
 import com.orm.query.Select;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaFragment extends Fragment implements RegisterCategoriaDialog.OnInputSelected {

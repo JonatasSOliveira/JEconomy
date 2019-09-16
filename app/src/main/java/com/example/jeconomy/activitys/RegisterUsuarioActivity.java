@@ -1,4 +1,4 @@
-package com.example.jeconomy;
+package com.example.jeconomy.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.jeconomy.R;
 import com.example.jeconomy.models.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarContext;
@@ -48,8 +49,9 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
                         List<Usuario> listUsuario = Usuario.find(Usuario.class, "login = ?", login);
                         SugarContext.terminate();
 
-
-                        Toast.makeText(RegisterUsuarioActivity.this, "Login já usado", Toast.LENGTH_SHORT).show();
+                        if(listUsuario.get(0) != null){
+                            Toast.makeText(RegisterUsuarioActivity.this, "Login já usado", Toast.LENGTH_SHORT).show();
+                        }
                         clearText();
                     } catch (Exception e) {
                         if (!senha.equals(senhaConfirm)) {

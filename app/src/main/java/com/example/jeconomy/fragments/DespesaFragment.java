@@ -16,9 +16,10 @@ import android.widget.TextView;
 
 import com.example.jeconomy.R;
 import com.example.jeconomy.adapter.ContasAdapter;
-import com.example.jeconomy.dialog.DespesaDialog;
+import com.example.jeconomy.dialogs.DespesaDialog;
 import com.example.jeconomy.models.Despesa;
 import com.example.jeconomy.models.Receita;
+import com.example.jeconomy.models.Usuario;
 import com.orm.SugarContext;
 import com.orm.query.Condition;
 import com.orm.query.Select;
@@ -30,9 +31,15 @@ public class DespesaFragment extends Fragment {
     private RecyclerView rvDespesa;
     private List<Despesa> listDespesa;
     private TextView tvConta;
+    private Usuario user;
 
     public DespesaFragment() {
         // Required empty public constructor
+    }
+
+    public DespesaFragment(Usuario user, long id){
+        this.user = user;
+        user.setId(id);
     }
 
     @Override
@@ -84,7 +91,9 @@ public class DespesaFragment extends Fragment {
             }
 
             SugarContext.init(getContext());
-            listDespesa = Select.from(Despesa.class).where(Condition.prop("is_pago").eq(isPago)).orderBy(order).list();
+
+            listDespesa = Select.from(Despesa.class).where(Condition.prop("is_pago").eq(isPago),
+                    Condition.prop("usuario").eq(user.getId())).orderBy(order).list();
             SugarContext.terminate();
             if (listDespesa != null) {
                 ContasAdapter adapter = new ContasAdapter(getContext(), listDespesa, 'D');
