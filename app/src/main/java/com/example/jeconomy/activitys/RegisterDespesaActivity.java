@@ -61,7 +61,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         long userId = bundle.getLong("user_id");
         user.setId(userId);
 
-        String[] listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "À PAGAR"};
+        String[] listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "A PAGAR"};
 
         try {
             updateCategoria();

@@ -51,7 +51,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_bemvindo_login"
         app:layout_constraintVertical_bias="0.100000024">
-
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,7 +72,6 @@
         app:layout_constraintTop_toBottomOf="@+id/til_login_login"
         app:layout_constraintVertical_bias="0.100000024"
         app:passwordToggleEnabled="true">
-
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

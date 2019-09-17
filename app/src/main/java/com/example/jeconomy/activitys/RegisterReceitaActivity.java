@@ -54,7 +54,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         long userId = bundle.getLong("user_id");
         user.setId(userId);
 
-        String[] arrTipoPag = {"PAGA", "À PAGAR"}, arrTipo = {"VENDA", "SERVIÇO"};
+        String[] arrTipoPag = {"PAGA", "A PAGAR"}, arrTipo = {"VENDA", "SERVIÇO"};
         String[] arrFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"};
 
         tilDataPv.setHint("DATA DE PAGAMENTO");
