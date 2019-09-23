@@ -12,6 +12,8 @@ import com.example.jeconomy.models.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarContext;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class RegisterUsuarioActivity extends AppCompatActivity {
@@ -58,7 +60,13 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
                             Toast.makeText(RegisterUsuarioActivity.this, "Senhas não correspondentes", Toast.LENGTH_SHORT).show();
                             clearText();
                         } else {
-                            usuario = new Usuario(nome, login, senha);
+                            try {
+                                usuario = new Usuario(nome, login, senha);
+                            } catch (NoSuchAlgorithmException e1) {
+                                e1.printStackTrace();
+                            } catch (UnsupportedEncodingException e1) {
+                                e1.printStackTrace();
+                            }
                             try {
                                 SugarContext.init(RegisterUsuarioActivity.this);
                                 usuario.save();
