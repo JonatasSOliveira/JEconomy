@@ -13,15 +13,17 @@ public class Despesa extends SugarRecord implements Serializable {
     private boolean isPago;
     private Categoria categoria;
     private Usuario usuario;
+    private String obs;
 
     public Despesa(){
 
     }
 
-    public Despesa(double valor, Categoria categoria, Usuario usuario) {
+    public Despesa(double valor, Categoria categoria, String obs, Usuario usuario) {
         this.valor = valor;
         this.categoria = categoria;
         this.usuario = usuario;
+        this.obs = obs;
         dataPag = null;
         dataVenc = null;
         formaPag = "";

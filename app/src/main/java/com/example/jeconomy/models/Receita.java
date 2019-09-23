@@ -19,7 +19,7 @@ public class Receita extends SugarRecord implements Serializable {
     private Date dataServ;
     private Usuario usuario;
     private boolean isPago;
-
+    private String obs;
 
     public Receita() {
 

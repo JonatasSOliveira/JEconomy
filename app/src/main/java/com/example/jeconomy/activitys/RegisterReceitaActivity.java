@@ -442,7 +442,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         int today = dateActual.get(Calendar.DAY_OF_MONTH);
 
         return yearSelected < yearActual
-                || yearSelected == yearSelected
+                || yearSelected == yearActual
                 && (monthSelected < monthActual
                 || (monthSelected == monthActual
                 && daySelected <= today));

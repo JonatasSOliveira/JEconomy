@@ -12,7 +12,6 @@ public class Usuario extends SugarRecord implements Serializable {
     private String nome;
     private String login;
     private String senha;
-    private String obs;
 
     public Usuario(){
 

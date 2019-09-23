@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,28 +41,24 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
     private Date date;
     private TextView tvFormaPag;
     private Usuario user;
+    private CheckBox cbObs;
+    private EditText etObs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_despesa);
 
-        spCategoria = findViewById(R.id.sp_categoria_registerdespesa);
-        spFormaPag = findViewById(R.id.sp_formapag_registerdespesa);
-        spTipoPag = findViewById(R.id.sp_tipo_registerdespesa);
-        btnCadastrar = findViewById(R.id.btn_cadastrar_registerdespesa);
-        btnData = findViewById(R.id.btn_data_registerdespesa);
-        tilData = findViewById(R.id.til_data_registerdespesa);
-        tilValor = findViewById(R.id.til_valor_registerdespesa);
-        tvFormaPag = findViewById(R.id.tv_formapag_registerdespesa);
-
-        tilData.getEditText().setEnabled(false);
-        tilData.setHint("DATA DE PAGAMENTO");
-
         Bundle bundle = getIntent().getBundleExtra("home");
         user = (Usuario) bundle.getSerializable("user");
         long userId = bundle.getLong("user_id");
         user.setId(userId);
+
+        setAtributes();
+
+        tilData.getEditText().setEnabled(false);
+        tilData.setHint("DATA DE PAGAMENTO");
+        etObs.setEnabled(false);
 
         String[] listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "A PAGAR"};
 
@@ -103,6 +102,14 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                 }
             });
 
+            cbObs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    etObs.setEnabled(b);
+                    etObs.setText("");
+                }
+            });
+
             btnData.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -119,9 +126,10 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                     int tipoDespesa = spTipoPag.getSelectedItemPosition();
                     String auxValor = tilValor.getEditText().getText().toString();
                     String data = tilData.getEditText().getText().toString();
+                    String obs = etObs.getText().toString().trim();
 
                     if (categoriaItem == 0 || auxValor.isEmpty() || data.isEmpty() ||
-                            (formaPagItem == 0 && tipoDespesa == 0)) {
+                            (formaPagItem == 0 && tipoDespesa == 0) || (cbObs.isChecked() && obs.equals(""))) {
                         Toast.makeText(RegisterDespesaActivity.this, "Preencha todos os Campos",
                                 Toast.LENGTH_SHORT).show();
                     } else {
@@ -133,7 +141,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                             save(categoria);
                         }
 
-                        Despesa despesa = new Despesa(valor, categoria, user);
+                        Despesa despesa = new Despesa(valor, categoria, obs, user);
 
                         if (spTipoPag.getSelectedItemPosition() == 0) {
                             if (formaPagItem == 1) {
@@ -148,26 +156,20 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                             despesa.setPago(false);
                             despesa.setDataVenc(date);
                         }
-
                         save(despesa);
-
                     }
                 }
             });
-
 
         } catch (Exception e) {
             System.err.println("<===========================================================>");
             e.printStackTrace();
             System.err.println("<===========================================================>");
         }
-
-
     }
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-
         Calendar dateActual = Calendar.getInstance();
         Calendar dateSelected = Calendar.getInstance();
         dateSelected.set(Calendar.YEAR, year);
@@ -304,10 +306,23 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         int today = dateActual.get(Calendar.DAY_OF_MONTH);
 
         return yearSelected < yearActual
-                || yearSelected == yearSelected
+                || yearSelected == yearActual
                 && (monthSelected < monthActual
                 || (monthSelected == monthActual
                 && daySelected <= today));
+    }
+
+    private void setAtributes() {
+        spCategoria = findViewById(R.id.sp_categoria_registerdespesa);
+        spFormaPag = findViewById(R.id.sp_formapag_registerdespesa);
+        spTipoPag = findViewById(R.id.sp_tipo_registerdespesa);
+        btnCadastrar = findViewById(R.id.btn_cadastrar_registerdespesa);
+        btnData = findViewById(R.id.btn_data_registerdespesa);
+        tilData = findViewById(R.id.til_data_registerdespesa);
+        tilValor = findViewById(R.id.til_valor_registerdespesa);
+        tvFormaPag = findViewById(R.id.tv_formapag_registerdespesa);
+        cbObs = findViewById(R.id.cb_obs_registerdespesa);
+        etObs = findViewById(R.id.mt_obs_registerdespesa);
     }
 
 }

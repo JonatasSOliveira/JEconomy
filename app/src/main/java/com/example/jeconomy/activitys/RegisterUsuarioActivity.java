@@ -11,6 +11,8 @@ import com.example.jeconomy.R;
 import com.example.jeconomy.models.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarContext;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -48,10 +50,10 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
                 } else {
                     try {
                         SugarContext.init(RegisterUsuarioActivity.this);
-                        List<Usuario> listUsuario = Usuario.find(Usuario.class, "login = ?", login);
+                        Usuario usuario = Select.from(Usuario.class).where(Condition.prop("login").eq(login)).list().get(01);
                         SugarContext.terminate();
 
-                        if(listUsuario.get(0) != null){
+                        if(usuario != null){
                             Toast.makeText(RegisterUsuarioActivity.this, "Login já usado", Toast.LENGTH_SHORT).show();
                         }
                         clearText();
