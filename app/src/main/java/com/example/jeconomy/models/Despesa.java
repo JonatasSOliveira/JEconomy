@@ -14,16 +14,18 @@ public class Despesa extends SugarRecord implements Serializable {
     private Categoria categoria;
     private Usuario usuario;
     private String obs;
+    private int qtdeParcela;
 
     public Despesa(){
 
     }
 
-    public Despesa(double valor, Categoria categoria, String obs, Usuario usuario) {
+    public Despesa(double valor, Categoria categoria, String obs, int qtdeParcela, Usuario usuario) {
         this.valor = valor;
         this.categoria = categoria;
         this.usuario = usuario;
         this.obs = obs;
+        this.qtdeParcela = qtdeParcela;
         dataPag = null;
         dataVenc = null;
         formaPag = "";
@@ -31,18 +33,6 @@ public class Despesa extends SugarRecord implements Serializable {
 
     public void setFormaPag(String formaPag) {
         this.formaPag = formaPag;
-    }
-
-    public void setDataPag(Date dataPag) {
-        this.dataPag = dataPag;
-    }
-
-    public void setDataVenc(Date dataVenc) {
-        this.dataVenc = dataVenc;
-    }
-
-    public void setPago(boolean pago) {
-        isPago = pago;
     }
 
     public boolean isPago() {
@@ -67,5 +57,14 @@ public class Despesa extends SugarRecord implements Serializable {
 
     public String getFormaPag() {
         return formaPag;
+    }
+
+    public void setPagVenc(boolean isPago, Date data){
+        this.isPago = isPago;
+        if(isPago){
+            this.dataPag = data;
+        }else {
+            this.dataVenc = data;
+        }
     }
 }

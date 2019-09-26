@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Receita extends SugarRecord implements Serializable {
-
     private String tipoReceita;
     private Categoria categoria;
     private double valor;
@@ -20,30 +19,24 @@ public class Receita extends SugarRecord implements Serializable {
     private Usuario usuario;
     private boolean isPago;
     private String obs;
+    private int qtdeParcelas;
 
     public Receita() {
 
     }
 
-    public Receita(Categoria categoria, double valor, double desconto, double valorTotal, Usuario usuario) {
+    public Receita(Categoria categoria, double valor, double desconto, double valorTotal, int qtdeParcelas, Usuario usuario) {
         this.categoria = categoria;
         this.valor = valor;
         this.desconto = desconto;
         this.valorTotal = valorTotal;
         this.usuario = usuario;
+        this.qtdeParcelas = qtdeParcelas;
         dataVenc = null;
         dataPag = null;
         dataServ = null;
         dataVend = null;
         formaPagamento = "0";
-    }
-
-    public void setTipoReceita(String tipoReceita) {
-        this.tipoReceita = tipoReceita;
-    }
-
-    public void setDataVend(Date dataVend) {
-        this.dataVend = dataVend;
     }
 
     public void setDataPag(Date dataPag) {
@@ -56,10 +49,6 @@ public class Receita extends SugarRecord implements Serializable {
 
     public void setFormaPagamento(String formaPagamento) {
         this.formaPagamento = formaPagamento;
-    }
-
-    public void setDataServ(Date dataServ) {
-        this.dataServ = dataServ;
     }
 
     public void setPago(boolean pago) {
@@ -108,5 +97,24 @@ public class Receita extends SugarRecord implements Serializable {
 
     public Date getDataServ() {
         return dataServ;
+    }
+
+    public void setVendServ(String tipo, Date data){
+        this.tipoReceita = tipo;
+
+        if(this.tipoReceita.equals("V")){
+            this.dataVend = data;
+        } else{
+            this.dataServ = data;
+        }
+    }
+
+    public void setPagVenc(boolean isPago, Date data){
+        this.isPago = isPago;
+        if(isPago){
+            this.dataPag = data;
+        }else {
+            this.dataVenc = data;
+        }
     }
 }

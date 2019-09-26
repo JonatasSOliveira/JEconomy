@@ -44,4 +44,10 @@ public class Usuario extends SugarRecord implements Serializable {
 
         return sb.toString();
     }
+
+    public boolean eqSenha(String senha){
+        senha = setCript(senha);
+
+        return this.senha.equals(senha);
+    }
 }

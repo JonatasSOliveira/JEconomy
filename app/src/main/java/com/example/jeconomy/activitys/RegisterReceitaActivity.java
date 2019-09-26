@@ -210,12 +210,9 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                         int tipo = spTipo.getSelectedItemPosition();
 
                         if (tipo == 0) {
-                            receita.setTipoReceita("V");
-                            receita.setDataVend(dataSv);
-
+                            receita.setVendServ("V", dataSv);
                         } else {
-                            receita.setTipoReceita("S");
-                            receita.setDataServ(dataSv);
+                            receita.setVendServ("S", dataSv);
                         }
                         if (tipoPag == 0) {
                             receita.setPago(true);
@@ -225,9 +222,9 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                             } else {
                                 receita.setFormaPagamento("C");
                             }
+                            receita.setPagVenc(true, date);
                         } else {
-                            receita.setPago(false);
-                            receita.setDataVenc(dataPv);
+                            receita.setPagVenc(false, date);
                         }
 
                         save(receita);

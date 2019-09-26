@@ -149,12 +149,10 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                             } else {
                                 despesa.setFormaPag("C");
                             }
-                            despesa.setPago(true);
-                            despesa.setDataPag(date);
+                            despesa.setPagVenc(true, date);
 
                         } else {
-                            despesa.setPago(false);
-                            despesa.setDataVenc(date);
+                          despesa.setPagVenc(false, date);
                         }
                         save(despesa);
                     }
