@@ -205,7 +205,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                         double descon = Double.parseDouble(auxDescon);
                         double valorTotal = valor - (valor * descon / 100);
 
-                        Receita receita = new Receita(categoria, valor, descon, valorTotal, user);
+                        Receita receita = new Receita(valor, descon, valorTotal, 0, categoria, user);
 
                         int tipo = spTipo.getSelectedItemPosition();
 
@@ -222,9 +222,9 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
                             } else {
                                 receita.setFormaPagamento("C");
                             }
-                            receita.setPagVenc(true, date);
+                            receita.setPagVenc(true, dataPv);
                         } else {
-                            receita.setPagVenc(false, date);
+                            receita.setPagVenc(false, dataPv);
                         }
 
                         save(receita);

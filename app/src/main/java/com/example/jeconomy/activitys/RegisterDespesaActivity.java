@@ -141,7 +141,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                             save(categoria);
                         }
 
-                        Despesa despesa = new Despesa(valor, categoria, obs, user);
+                        Despesa despesa = new Despesa(valor, obs, 0, categoria, user);
 
                         if (spTipoPag.getSelectedItemPosition() == 0) {
                             if (formaPagItem == 1) {
