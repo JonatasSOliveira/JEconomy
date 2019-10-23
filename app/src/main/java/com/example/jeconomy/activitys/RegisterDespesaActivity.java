@@ -37,7 +37,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
     private Spinner spCategoria, spFormaPag, spTipoPag;
     private List<Categoria> listCategoria;
     private Button btnData, btnCadastrar;
-    private TextInputLayout tilData, tilValor;
+    private TextInputLayout tilData, tilValor, tilQtdeParcela;
     private Date date;
     private TextView tvFormaPag;
     private Usuario user;
@@ -56,11 +56,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
 
         setAtributes();
 
-        tilData.getEditText().setEnabled(false);
-        tilData.setHint("DATA DE PAGAMENTO");
-        etObs.setEnabled(false);
-
-        String[] listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "A PAGAR"};
+        String[] listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "PARCELADA"};
 
         try {
             updateCategoria();
@@ -145,14 +141,14 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
 
                         if (spTipoPag.getSelectedItemPosition() == 0) {
                             if (formaPagItem == 1) {
-                                despesa.setFormaPag("D");
+                                //despesa.setFormaPag("D");
                             } else {
-                                despesa.setFormaPag("C");
+                                //despesa.setFormaPag("C");
                             }
-                            despesa.setPagVenc(true, date);
+                            //despesa.setPagVenc(true, date);
 
                         } else {
-                          despesa.setPagVenc(false, date);
+                          //despesa.setPagVenc(false, date);
                         }
                         save(despesa);
                     }
@@ -321,6 +317,13 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         tvFormaPag = findViewById(R.id.tv_formapag_registerdespesa);
         cbObs = findViewById(R.id.cb_obs_registerdespesa);
         etObs = findViewById(R.id.mt_obs_registerdespesa);
+        tilQtdeParcela = findViewById(R.id.til_qtdeparcelas_resgisterdespesa);
+
+        tilData.getEditText().setEnabled(false);
+        tilData.setHint("DATA DE PAGAMENTO");
+        etObs.setEnabled(false);
+        tilQtdeParcela.setEnabled(false);
+        tilQtdeParcela.setVisibility(View.INVISIBLE);
     }
 
 }

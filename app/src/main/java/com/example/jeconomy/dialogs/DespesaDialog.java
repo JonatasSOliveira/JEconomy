@@ -47,7 +47,7 @@ public class DespesaDialog extends AppCompatDialogFragment {
 
         String data, valor;
 
-        if (despesa.isPago()) {
+       /* if (despesa.isPago()) {
             data = DateFormat.getDateInstance(DateFormat.SHORT).format(despesa.getDataPag());
             tvDataPag.setText(data);
             if (despesa.getFormaPag().equals("D")) {
@@ -70,7 +70,7 @@ public class DespesaDialog extends AppCompatDialogFragment {
         if (despesa.getDataVenc() != null) {
             data = DateFormat.getDateInstance(DateFormat.SHORT).format(despesa.getDataVenc());
             tvDataVenc.setText(data);
-        }
+        }*/
 
         valor = "R$ " + despesa.getValor();
         tvValor.setText(valor);

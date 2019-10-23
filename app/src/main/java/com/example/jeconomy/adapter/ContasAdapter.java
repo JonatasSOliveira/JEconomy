@@ -14,7 +14,6 @@ import com.example.jeconomy.R;
 import com.example.jeconomy.models.Despesa;
 import com.example.jeconomy.models.Receita;
 
-import java.text.DateFormat;
 import java.util.List;
 
 public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHolder> {
@@ -58,11 +57,11 @@ public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHold
             holder.tvCategoria.setText(listDespesa.get(position).getCategoria().getNome());
             String date;
             if (listDespesa.get(position).isPago()) {
-                date = DateFormat.getDateInstance(DateFormat.SHORT).format(listDespesa.get(position).getDataPag());
-                holder.tvData.setText(date);
+                //date = DateFormat.getDateInstance(DateFormat.SHORT).format(listDespesa.get(position).getDataPag());
+                //holder.tvData.setText(date);
             } else {
-                date = DateFormat.getDateInstance(DateFormat.SHORT).format(listDespesa.get(position).getDataVenc());
-                holder.tvData.setText(date);
+                //date = DateFormat.getDateInstance(DateFormat.SHORT).format(listDespesa.get(position).getDataVenc());
+                //holder.tvData.setText(date);
             }
             holder.btnVisualizar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,11 +73,11 @@ public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHold
             holder.tvCategoria.setText(listReceita.get(position).getCategoria().getNome());
             String date;
             if (listReceita.get(position).isPago()) {
-                date = DateFormat.getDateInstance(DateFormat.SHORT).format(listReceita.get(position).getDataPag());
-                holder.tvData.setText(date);
+                //date = DateFormat.getDateInstance(DateFormat.SHORT).format(listReceita.get(position).getDataPag());
+                //holder.tvData.setText(date);
             } else {
-                date = DateFormat.getDateInstance(DateFormat.SHORT).format(listReceita.get(position).getDataVenc());
-                holder.tvData.setText(date);
+                //date = DateFormat.getDateInstance(DateFormat.SHORT).format(listReceita.get(position).getDataVenc());
+                //holder.tvData.setText(date);
             }
             holder.btnVisualizar.setOnClickListener(new View.OnClickListener() {
                 @Override

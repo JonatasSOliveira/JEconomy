@@ -45,7 +45,7 @@ public class Usuario extends SugarRecord implements Serializable {
         return sb.toString();
     }
 
-    public boolean eqSenha(String senha){
+    public boolean eqSenha(String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException{
         senha = setCript(senha);
 
         return this.senha.equals(senha);

@@ -45,8 +45,8 @@ public class PagamentoActivity extends AppCompatActivity implements DatePickerDi
 
         String data, valor;
 
-        data = DateFormat.getDateInstance(DateFormat.SHORT).format(despesa.getDataVenc());
-        tvDataVenc.setText(data);
+        //data = DateFormat.getDateInstance(DateFormat.SHORT).format(despesa.getDataVenc());
+        //tvDataVenc.setText(data);
         tvCategoria.setText(despesa.getCategoria().getNome());
         btnDataPag.setOnClickListener(new View.OnClickListener() {
             @Override

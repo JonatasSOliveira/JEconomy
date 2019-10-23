@@ -47,7 +47,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_receita);
 
-        setAttributes();
+        /*setAttributes();
 
         Bundle bundle = getIntent().getBundleExtra("home");
         user = (Usuario) bundle.getSerializable("user");
@@ -238,7 +238,7 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
             System.err.println("<===========================================================>");
             e.printStackTrace();
             System.err.println("<===========================================================>");
-        }
+        }*/
 
 
     }

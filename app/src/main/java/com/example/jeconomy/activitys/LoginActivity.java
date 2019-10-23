@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                         usuario = Usuario.find(Usuario.class, "LOGIN = ?", login).get(0);
                         SugarContext.terminate();
 
-                        if (!usuario.eqSenha(senha) {
+                        if (!usuario.eqSenha(senha)) {
                             Toast.makeText(LoginActivity.this, "Senha Incorreta", Toast.LENGTH_SHORT).show();
                             clearInputs();
                         } else {

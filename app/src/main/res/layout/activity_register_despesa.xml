@@ -82,7 +82,6 @@
                 android:layout_marginBottom="10dp"
                 android:text="@string/escolher" />
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_data_registerdespesa"
                 android:layout_width="match_parent"
@@ -98,25 +97,24 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_valor_registerdespesa"
+                android:id="@+id/til_qtdeparcelas_resgisterdespesa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/til_data_registerdespesa"
+                android:layout_below="@id/btn_data_registerdespesa"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/valor"
-                    android:inputType="numberDecimal" />
+                    android:hint="Quantidade de Parcelas" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/tv_formapag_registerdespesa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/til_valor_registerdespesa"
+                android:layout_below="@id/btn_data_registerdespesa"
                 android:layout_marginTop="10dp"
                 android:text="@string/forma_de_pagamento" />
 
@@ -127,11 +125,26 @@
                 android:layout_below="@+id/tv_formapag_registerdespesa"
                 android:layout_marginBottom="10dp" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_valor_registerdespesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sp_formapag_registerdespesa"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/valor"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <CheckBox
                 android:id="@+id/cb_obs_registerdespesa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sp_formapag_registerdespesa"
+                android:layout_below="@+id/til_valor_registerdespesa"
                 android:layout_marginTop="10dp"
                 android:text="Observação" />
 
