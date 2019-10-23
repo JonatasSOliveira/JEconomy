@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,9 +23,12 @@ import com.example.jeconomy.dialogs.DatePickerFragment;
 import com.example.jeconomy.dialogs.RegisterCategoriaDialog;
 import com.example.jeconomy.models.Categoria;
 import com.example.jeconomy.models.Despesa;
+import com.example.jeconomy.models.FormaPagamento;
+import com.example.jeconomy.models.Parcela;
 import com.example.jeconomy.models.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orm.SugarContext;
+import com.orm.query.Condition;
 import com.orm.query.Select;
 
 import java.text.DateFormat;
@@ -120,16 +124,26 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                     int categoriaItem = spCategoria.getSelectedItemPosition();
                     int formaPagItem = spFormaPag.getSelectedItemPosition();
                     int tipoDespesa = spTipoPag.getSelectedItemPosition();
-                    String auxValor = tilValor.getEditText().getText().toString();
+                    String auxValor = tilValor.getEditText().getText().toString().trim();
                     String data = tilData.getEditText().getText().toString();
                     String obs = etObs.getText().toString().trim();
+                    String auxQtdeParcelas = tilQtdeParcela.getEditText().getText().toString().trim();
 
                     if (categoriaItem == 0 || auxValor.isEmpty() || data.isEmpty() ||
-                            (formaPagItem == 0 && tipoDespesa == 0) || (cbObs.isChecked() && obs.equals(""))) {
+                            (formaPagItem == 0 && tipoDespesa == 0 || auxQtdeParcelas.equals("") && tipoDespesa == 0)
+                            || (cbObs.isChecked() && obs.equals(""))) {
                         Toast.makeText(RegisterDespesaActivity.this, "Preencha todos os Campos",
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         double valor = Double.parseDouble(auxValor);
+                        int qtdeParcelas;
+                        try {
+                            qtdeParcelas = Integer.parseInt(auxQtdeParcelas);
+                        } catch (Exception e) {
+                            qtdeParcelas = 1;
+                        }
+
+
                         Categoria categoria = listCategoria.get(categoriaItem - 2);
 
                         if (!categoria.isUsed()) {
@@ -137,20 +151,20 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                             save(categoria);
                         }
 
-                        Despesa despesa = new Despesa(valor, obs, 0, categoria, user);
+                        Despesa despesa = new Despesa(valor, obs, qtdeParcelas, categoria, user);
 
                         if (spTipoPag.getSelectedItemPosition() == 0) {
+                            Parcela parcela = new Parcela(date, null, 1, save(despesa));
+                            FormaPagamento formaPag = new FormaPagamento(valor, save(parcela));
                             if (formaPagItem == 1) {
-                                //despesa.setFormaPag("D");
+                                formaPag.setTipo("D");
                             } else {
-                                //despesa.setFormaPag("C");
+                                formaPag.setTipo("C");
                             }
-                            //despesa.setPagVenc(true, date);
-
                         } else {
-                          //despesa.setPagVenc(false, date);
+                            Parcela parcela = new Parcela(null, date, 1, save(despesa));
+                            save(parcela);
                         }
-                        save(despesa);
                     }
                 }
             });
@@ -232,19 +246,14 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         }
     }
 
-    private void save(Despesa despesa) {
-        try {
-            SugarContext.init(RegisterDespesaActivity.this);
-            despesa.save();
-            SugarContext.terminate();
-            clearInputs();
-            Toast.makeText(RegisterDespesaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            System.err.println("<===========================================================>");
-            e.printStackTrace();
-            System.err.println("<===========================================================>");
-            Toast.makeText(RegisterDespesaActivity.this, "UM ERRO OCORREU", Toast.LENGTH_SHORT).show();
-        }
+    private Despesa save(Despesa despesa) {
+        SugarContext.init(RegisterDespesaActivity.this);
+        despesa.save();
+        despesa = (Select.from(Despesa.class).list()).get((int) Select.from(Despesa.class).count() - 1);
+        SugarContext.terminate();
+        clearInputs();
+        Toast.makeText(RegisterDespesaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
+        return despesa;
     }
 
     private void save(Categoria categoria) {
@@ -252,8 +261,6 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
             SugarContext.init(RegisterDespesaActivity.this);
             categoria.save();
             SugarContext.terminate();
-            clearInputs();
-            Toast.makeText(RegisterDespesaActivity.this, "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             System.err.println("<===========================================================>");
             e.printStackTrace();
@@ -267,13 +274,18 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
             tilData.setHint("DATA DE PAGAMENTO");
             spFormaPag.setVisibility(View.VISIBLE);
             tvFormaPag.setVisibility(View.VISIBLE);
+            tilQtdeParcela.setVisibility(View.INVISIBLE);
         } else {
-            tilData.setHint("DATA DE VENCIMENTO");
+            tilData.setHint("DATA DE VENCIMENTO DA PRIMEIRA PARCELA");
             spFormaPag.setVisibility(View.INVISIBLE);
             tvFormaPag.setVisibility(View.INVISIBLE);
+            tilQtdeParcela.setVisibility(View.VISIBLE);
         }
         tilData.getEditText().setText("");
         spFormaPag.setEnabled(isPago);
+        spFormaPag.setSelection(0);
+        tilQtdeParcela.setEnabled(!isPago);
+        tilQtdeParcela.getEditText().setText("");
     }
 
     private boolean isDateLater(Calendar dateSelected, Calendar dateActual) {
@@ -324,6 +336,16 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         etObs.setEnabled(false);
         tilQtdeParcela.setEnabled(false);
         tilQtdeParcela.setVisibility(View.INVISIBLE);
+    }
+
+    private Parcela save(Parcela parcela) {
+        SugarContext.init(RegisterDespesaActivity.this);
+        parcela.save();
+        parcela = (Select.from(Parcela.class).where(Condition.prop("DESPESA").eq(parcela.getDespesa().getId()))
+                .and(Condition.prop("N_PARCELA").eq(parcela.getnParcela())).list()).get(0);
+        SugarContext.terminate();
+
+        return parcela;
     }
 
 }

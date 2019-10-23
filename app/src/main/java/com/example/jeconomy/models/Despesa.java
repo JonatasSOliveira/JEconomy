@@ -36,12 +36,4 @@ public class Despesa extends SugarRecord implements Serializable {
         return categoria;
     }
 
-    /*public void setPagVenc(boolean isPago, Date data){
-        this.isPago = isPago;
-        if(isPago){
-            this.dataPag = data;
-        }else {
-            this.dataVenc = data;
-        }
-    }*/
 }

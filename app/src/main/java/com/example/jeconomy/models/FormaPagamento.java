@@ -11,9 +11,12 @@ public class FormaPagamento extends SugarRecord {
 
     }
 
-    public FormaPagamento(String tipo, double valor, Parcela parcela){
-        this.tipo = tipo;
+    public FormaPagamento(double valor, Parcela parcela) {
         this.valor = valor;
         this.parcela = parcela;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

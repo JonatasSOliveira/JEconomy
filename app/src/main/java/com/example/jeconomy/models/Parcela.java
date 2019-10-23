@@ -30,4 +30,12 @@ public class Parcela extends SugarRecord {
         this.despesa = despesa;
         receita = null;
     }
+
+    public int getnParcela() {
+        return nParcela;
+    }
+
+    public Despesa getDespesa() {
+        return despesa;
+    }
 }
