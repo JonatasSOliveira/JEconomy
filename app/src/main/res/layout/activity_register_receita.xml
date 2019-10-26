@@ -193,11 +193,29 @@
                 android:layout_below="@+id/tv_formapag_registerreceita"
                 android:layout_marginBottom="10dp" />
 
+            <CheckBox
+                android:id="@+id/cb_obs_registerreceita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sp_formapag_registerreceita"
+                android:layout_marginTop="10dp"
+                android:text="Observação" />
+
+            <EditText
+                android:id="@+id/mt_obs_registerdespesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cb_obs_registerreceita"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
+
             <Button
                 android:id="@+id/btn_cadastrar_registerreceita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/sp_formapag_registerreceita"
+                android:layout_below="@id/mt_obs_registerdespesa"
                 android:layout_marginTop="10dp"
                 android:text="@string/cadastrar" />
 
