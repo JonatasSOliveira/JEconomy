@@ -11,7 +11,7 @@ public class Parcela extends SugarRecord {
     private Receita receita;
     private Despesa despesa;
 
-    public Parcela(){
+    public Parcela() {
 
     }
 
@@ -45,5 +45,9 @@ public class Parcela extends SugarRecord {
 
     public Date getDataVenc() {
         return dataVenc;
+    }
+
+    public Receita getReceita() {
+        return receita;
     }
 }
