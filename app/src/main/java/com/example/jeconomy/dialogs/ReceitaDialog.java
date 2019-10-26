@@ -58,7 +58,7 @@ public class ReceitaDialog extends AppCompatDialogFragment {
         tvValor.setText(valor);
         tvDescon.setText(descon);
 
-        if (receita.getTipoReceita().equals("V")) {
+        /*if (receita.getTipoReceita().equals("V")) {
             tvTipo.setText("Venda");
             data = DateFormat.getDateInstance(DateFormat.SHORT).format(receita.getDataVend());
             tvInfoDataSV.setText(data);
@@ -68,7 +68,7 @@ public class ReceitaDialog extends AppCompatDialogFragment {
             tvDataSV.setText("Data do Serviço");
             tvInfoDataSV.setText(data);
         }
-        /*if (receita.getDataPag() != null) {
+        if (receita.getDataPag() != null) {
             data = DateFormat.getDateInstance(DateFormat.SHORT).format(receita.getDataPag());
             tvDataPag.setText(data);
             if (receita.getFormaPagamento().equals("D")) {
