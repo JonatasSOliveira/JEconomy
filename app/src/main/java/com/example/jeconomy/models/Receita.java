@@ -10,7 +10,6 @@ public class Receita extends SugarRecord implements Serializable {
     private double valor;
     private double desconto;
     private double valorTotal;
-    private Date dataVend;
     private Date dataServ;
     private boolean isPago;
     private String obs;
@@ -22,15 +21,14 @@ public class Receita extends SugarRecord implements Serializable {
 
     }
 
-    public Receita(double valor, double desconto, double valorTotal, int qtdeParcelas, Categoria categoria, Usuario usuario) {
+    public Receita(double valor, double desconto, double valorTotal, int qtdeParcelas, Date dataServ, Categoria categoria, Usuario usuario) {
         this.categoria = categoria;
         this.valor = valor;
         this.desconto = desconto;
         this.valorTotal = valorTotal;
         this.usuario = usuario;
         this.qtdeParcelas = qtdeParcelas;
-        dataServ = null;
-        dataVend = null;
+        this.dataServ = dataServ;
     }
 
     public void setPago(boolean pago) {
@@ -61,30 +59,10 @@ public class Receita extends SugarRecord implements Serializable {
         return tipoReceita;
     }
 
-    public Date getDataVend() {
-        return dataVend;
-    }
+
 
     public Date getDataServ() {
         return dataServ;
     }
 
-    public void setVendServ(String tipo, Date data){
-        this.tipoReceita = tipo;
-
-        if(this.tipoReceita.equals("V")){
-            this.dataVend = data;
-        } else{
-            this.dataServ = data;
-        }
-    }
-
-    /*public void setPagVenc(boolean isPago, Date data){
-        this.isPago = isPago;
-        if(isPago){
-            this.dataPag = data;
-        }else {
-            this.dataVenc = data;
-        }
-    }*/
 }
