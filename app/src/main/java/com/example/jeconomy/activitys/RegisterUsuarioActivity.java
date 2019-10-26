@@ -50,7 +50,7 @@ public class RegisterUsuarioActivity extends AppCompatActivity {
                 } else {
                     try {
                         SugarContext.init(RegisterUsuarioActivity.this);
-                        Usuario usuario = Select.from(Usuario.class).where(Condition.prop("login").eq(login)).list().get(01);
+                        Usuario usuario = Select.from(Usuario.class).where(Condition.prop("login").eq(login)).list().get(0);
                         SugarContext.terminate();
 
                         if(usuario != null){

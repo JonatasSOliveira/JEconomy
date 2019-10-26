@@ -4,8 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +40,7 @@ import java.util.List;
 
 public class RegisterDespesaActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, RegisterCategoriaDialog.OnInputSelected {
 
-    private Spinner spCategoria, spFormaPag, spTipoPag;
+    private Spinner spCategoria, spFormaPag;
     private List<Categoria> listCategoria;
     private Button btnData, btnCadastrar;
     private TextInputLayout tilData, tilValor, tilQtdeParcela;
@@ -47,6 +49,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
     private Usuario user;
     private CheckBox cbObs;
     private EditText etObs;
+    private Switch swPaga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,8 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
 
         setAtributes();
 
-        String[] listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"PAGA", "PARCELADA"};
+        final String[] listFormaPag = {"ESCOLHA", "DINHEIRO", "CARTÃO"}, listTipo = {"UNICA", "PARCELADA"};
+        tilData.setHint("DATA DO VENCIMENTO");
 
         try {
             updateCategoria();
@@ -68,25 +72,6 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterDespesaActivity.this,
                     android.R.layout.simple_spinner_item, listFormaPag);
             spFormaPag.setAdapter(arrayAdapter);
-
-            arrayAdapter = new ArrayAdapter<>(RegisterDespesaActivity.this,
-                    android.R.layout.simple_spinner_item, listTipo);
-            spTipoPag.setAdapter(arrayAdapter);
-
-            spTipoPag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (i == 0) {
-                        payTypeChange(true);
-                    } else {
-                        payTypeChange(false);
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-                }
-            });
 
             spCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -102,13 +87,13 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                 }
             });
 
-            cbObs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            swPaga.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    etObs.setEnabled(b);
-                    etObs.setText("");
+                    payChange();
                 }
             });
+
 
             btnData.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -118,31 +103,52 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                 }
             });
 
+            tilQtdeParcela.getEditText().addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    String text = charSequence.toString();
+                    if (text.isEmpty()) {
+                        tilQtdeParcela.getEditText().setText("0");
+                    }
+                    payChange();
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+
+            cbObs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    etObs.setEnabled(b);
+                    etObs.setText("");
+                }
+            });
+
             btnCadastrar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int categoriaItem = spCategoria.getSelectedItemPosition();
                     int formaPagItem = spFormaPag.getSelectedItemPosition();
-                    int tipoDespesa = spTipoPag.getSelectedItemPosition();
                     String auxValor = tilValor.getEditText().getText().toString().trim();
                     String data = tilData.getEditText().getText().toString();
                     String obs = etObs.getText().toString().trim();
-                    String auxQtdeParcelas = tilQtdeParcela.getEditText().getText().toString().trim();
+                    int qtdeParcelas = Integer.parseInt(tilQtdeParcela.getEditText().getText().toString());
 
                     if (categoriaItem == 0 || auxValor.isEmpty() || data.isEmpty() ||
-                            (formaPagItem == 0 && tipoDespesa == 0 || auxQtdeParcelas.equals("") && tipoDespesa == 0)
+                            (formaPagItem == 0 && swPaga.isChecked()) || qtdeParcelas < 1
                             || (cbObs.isChecked() && obs.equals(""))) {
                         Toast.makeText(RegisterDespesaActivity.this, "Preencha todos os Campos",
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         double valor = Double.parseDouble(auxValor);
-                        int qtdeParcelas;
-                        try {
-                            qtdeParcelas = Integer.parseInt(auxQtdeParcelas);
-                        } catch (Exception e) {
-                            qtdeParcelas = 1;
-                        }
-
 
                         Categoria categoria = listCategoria.get(categoriaItem - 2);
 
@@ -153,7 +159,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
 
                         Despesa despesa = new Despesa(valor, obs, qtdeParcelas, categoria, user);
 
-                        if (spTipoPag.getSelectedItemPosition() == 0) {
+                        if (swPaga.isChecked()) {
                             Parcela parcela = new Parcela(date, null, 1, save(despesa));
                             FormaPagamento formaPag = new FormaPagamento(valor, save(parcela));
                             if (formaPagItem == 1) {
@@ -184,11 +190,11 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         dateSelected.set(Calendar.MONTH, month);
         dateSelected.set(Calendar.DAY_OF_MONTH, day);
 
-        if (spTipoPag.getSelectedItemPosition() == 0
+        if (swPaga.isChecked()
                 && isDateLater(dateSelected, dateActual)) {
             Toast.makeText(this, "Selecione uma data de pagamento atual ou anterior", Toast.LENGTH_SHORT).show();
 
-        } else if (spTipoPag.getSelectedItemPosition() == 1 && isDatePrevious(dateSelected, dateActual)) {
+        } else if ((!swPaga.isChecked()) && isDatePrevious(dateSelected, dateActual)) {
             Toast.makeText(this, "Selecione uma data de vencimento posterior ao dia atual",
                     Toast.LENGTH_SHORT).show();
         } else {
@@ -205,9 +211,11 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
     private void clearInputs() {
         spCategoria.setSelection(0);
         spFormaPag.setSelection(0);
-        spTipoPag.setSelection(0);
         tilData.getEditText().setText("");
         tilValor.getEditText().setText("");
+        cbObs.setChecked(false);
+        etObs.setText("");
+        swPaga.setChecked(false);
     }
 
     private void updateCategoria() {
@@ -227,23 +235,6 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterDespesaActivity.this,
                 android.R.layout.simple_spinner_item, listNome);
         spCategoria.setAdapter(arrayAdapter);
-    }
-
-    @Override
-    public void sendInput(String input, Categoria categoria) {
-        try {
-            SugarContext.init(RegisterDespesaActivity.this);
-            categoria = new Categoria(input);
-            categoria.save();
-
-        } catch (Exception e) {
-            System.err.println("<=====================================>");
-            e.printStackTrace();
-            System.err.println("<=====================================>");
-        } finally {
-            SugarContext.terminate();
-            updateCategoria();
-        }
     }
 
     private Despesa save(Despesa despesa) {
@@ -269,23 +260,29 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         }
     }
 
-    private void payTypeChange(boolean isPago) {
-        if (isPago) {
-            tilData.setHint("DATA DE PAGAMENTO");
-            spFormaPag.setVisibility(View.VISIBLE);
-            tvFormaPag.setVisibility(View.VISIBLE);
-            tilQtdeParcela.setVisibility(View.INVISIBLE);
+    private Parcela save(Parcela parcela) {
+        SugarContext.init(RegisterDespesaActivity.this);
+        parcela.save();
+        parcela = (Select.from(Parcela.class).where(Condition.prop("DESPESA").eq(parcela.getDespesa().getId()))
+                .and(Condition.prop("N_PARCELA").eq(parcela.getnParcela())).list()).get(0);
+        SugarContext.terminate();
+
+        return parcela;
+    }
+
+    private void payChange() {
+        int qtdeParcela = Integer.parseInt(tilQtdeParcela.getEditText().getText().toString());
+        String text;
+        if (swPaga.isChecked()) {
+            text = "PAGAMENTO";
+
         } else {
-            tilData.setHint("DATA DE VENCIMENTO DA PRIMEIRA PARCELA");
-            spFormaPag.setVisibility(View.INVISIBLE);
-            tvFormaPag.setVisibility(View.INVISIBLE);
-            tilQtdeParcela.setVisibility(View.VISIBLE);
+            text = "VENCIMENTO";
         }
-        tilData.getEditText().setText("");
-        spFormaPag.setEnabled(isPago);
-        spFormaPag.setSelection(0);
-        tilQtdeParcela.setEnabled(!isPago);
-        tilQtdeParcela.getEditText().setText("");
+        if (qtdeParcela > 1) {
+            text = text + " - 1º PARCELA";
+        }
+        tilData.setHint(text);
     }
 
     private boolean isDateLater(Calendar dateSelected, Calendar dateActual) {
@@ -321,7 +318,6 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
     private void setAtributes() {
         spCategoria = findViewById(R.id.sp_categoria_registerdespesa);
         spFormaPag = findViewById(R.id.sp_formapag_registerdespesa);
-        spTipoPag = findViewById(R.id.sp_tipo_registerdespesa);
         btnCadastrar = findViewById(R.id.btn_cadastrar_registerdespesa);
         btnData = findViewById(R.id.btn_data_registerdespesa);
         tilData = findViewById(R.id.til_data_registerdespesa);
@@ -330,22 +326,29 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         cbObs = findViewById(R.id.cb_obs_registerdespesa);
         etObs = findViewById(R.id.mt_obs_registerdespesa);
         tilQtdeParcela = findViewById(R.id.til_qtdeparcelas_resgisterdespesa);
+        swPaga = findViewById(R.id.sw_parcelaPaga_registedespesa);
 
         tilData.getEditText().setEnabled(false);
         tilData.setHint("DATA DE PAGAMENTO");
         etObs.setEnabled(false);
-        tilQtdeParcela.setEnabled(false);
-        tilQtdeParcela.setVisibility(View.INVISIBLE);
+        tilQtdeParcela.getEditText().setText("1");
     }
 
-    private Parcela save(Parcela parcela) {
-        SugarContext.init(RegisterDespesaActivity.this);
-        parcela.save();
-        parcela = (Select.from(Parcela.class).where(Condition.prop("DESPESA").eq(parcela.getDespesa().getId()))
-                .and(Condition.prop("N_PARCELA").eq(parcela.getnParcela())).list()).get(0);
-        SugarContext.terminate();
+    @Override
+    public void sendInput(String input, Categoria categoria) {
+        try {
+            SugarContext.init(RegisterDespesaActivity.this);
+            categoria = new Categoria(input);
+            categoria.save();
 
-        return parcela;
+        } catch (Exception e) {
+            System.err.println("<=====================================>");
+            e.printStackTrace();
+            System.err.println("<=====================================>");
+        } finally {
+            SugarContext.terminate();
+            updateCategoria();
+        }
     }
 
 }
