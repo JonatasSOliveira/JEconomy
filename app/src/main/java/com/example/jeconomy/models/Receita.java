@@ -59,10 +59,11 @@ public class Receita extends SugarRecord implements Serializable {
         return tipoReceita;
     }
 
-
-
     public Date getDataServ() {
         return dataServ;
     }
 
+    public void setTipoReceita(String tipoReceita) {
+        this.tipoReceita = tipoReceita;
+    }
 }
