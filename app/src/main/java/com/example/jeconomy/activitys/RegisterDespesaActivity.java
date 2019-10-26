@@ -184,6 +184,7 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                             } else {
                                 formaPag.setTipo("C");
                             }
+                            save(formaPag);
                         } else {
                             despesa.setPago(false);
                             Parcela parcela = new Parcela(null, date, 1, save(despesa));
@@ -286,6 +287,18 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         SugarContext.terminate();
 
         return parcela;
+    }
+
+    private void save(FormaPagamento formaPagamento){
+        try {
+            SugarContext.init(RegisterDespesaActivity.this);
+            formaPagamento.save();
+            SugarContext.terminate();
+        } catch (Exception e) {
+            System.err.println("<===========================================================>");
+            e.printStackTrace();
+            System.err.println("<===========================================================>");
+        }
     }
 
     private void payChange() {
