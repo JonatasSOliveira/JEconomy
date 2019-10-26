@@ -90,6 +90,17 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
             swPaga.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    tvFormaPag.setEnabled(b);
+                    spFormaPag.setEnabled(b);
+                    spFormaPag.setSelection(0);
+                    if (b) {
+                        tvFormaPag.setVisibility(View.VISIBLE);
+                        spFormaPag.setVisibility(View.VISIBLE);
+                    } else {
+                        tvFormaPag.setVisibility(View.INVISIBLE);
+                        spFormaPag.setVisibility(View.INVISIBLE);
+                    }
+
                     payChange();
                 }
             });
@@ -160,9 +171,9 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                         Despesa despesa = new Despesa(valor, obs, qtdeParcelas, categoria, user);
 
                         if (swPaga.isChecked()) {
-                            if(qtdeParcelas == 1){
+                            if (qtdeParcelas == 1) {
                                 despesa.setPago(true);
-                            } else{
+                            } else {
                                 despesa.setPago(false);
                             }
 
@@ -339,6 +350,10 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
         tilData.setHint("DATA DE PAGAMENTO");
         etObs.setEnabled(false);
         tilQtdeParcela.getEditText().setText("1");
+        tvFormaPag.setEnabled(false);
+        spFormaPag.setEnabled(false);
+        tvFormaPag.setVisibility(View.INVISIBLE);
+        spFormaPag.setVisibility(View.INVISIBLE);
     }
 
     @Override

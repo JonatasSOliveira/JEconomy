@@ -387,7 +387,6 @@ public class RegisterReceitaActivity extends AppCompatActivity implements DatePi
 
     private void setAttributes() {
         spCategoria = findViewById(R.id.sp_categoria_registerreceita);
-        spTipoPag = findViewById(R.id.sp_tipopag_registerreceita);
         spTipo = findViewById(R.id.sp_tipo_registerreceita);
         spFormaPag = findViewById(R.id.sp_formapag_registerreceita);
         tilDataPv = findViewById(R.id.til_datapv_registerreceita);
