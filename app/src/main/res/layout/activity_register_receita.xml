@@ -71,28 +71,20 @@
                 android:layout_below="@+id/tv_categoria_registerreceita"
                 android:layout_marginBottom="10dp" />
 
-            <TextView
-                android:id="@+id/tv_tipopag_registerreceita"
+            <Switch
+                android:id="@+id/sw_parcelapaga_registerreceita"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/sp_categoria_registerreceita"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="RECEITA:" />
-
-            <Spinner
-                android:id="@+id/sp_tipopag_registerreceita"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/sp_categoria_registerreceita"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/tv_tipopag_registerreceita" />
+                android:text="Receita Paga:     " />
 
             <Button
                 android:id="@+id/btn_datasv_registerreceita"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_tipopag_registerreceita"
+                android:layout_below="@+id/sw_parcelapaga_registerreceita"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/escolher" />
@@ -101,7 +93,7 @@
                 android:id="@+id/til_datasv_registerreceita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_tipopag_registerreceita"
+                android:layout_below="@+id/sw_parcelapaga_registerreceita"
                 android:layout_toEndOf="@id/btn_datasv_registerreceita">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -131,10 +123,25 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_valor_registerreceita"
+                android:id="@+id/til_qtdeparcelas_resgisterreceita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_datapv_registerreceita"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Quantidade de Parcelas"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_valor_registerreceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/til_qtdeparcelas_resgisterreceita"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
 
@@ -149,9 +156,9 @@
                 android:id="@+id/til_desconto_registerreceita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/til_valor_registerreceita"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_below="@+id/til_valor_registerreceita">
+                android:layout_marginBottom="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -166,33 +173,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/til_desconto_registerreceita"
-                android:text="Valor Total: R$ 0,00"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:text="Valor Total: R$ 0,00"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tv_formapag_registerreceita"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/forma_de_pagamento"
                 android:layout_below="@+id/tv_valortotal_registerreceita"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:text="@string/forma_de_pagamento" />
 
             <Spinner
                 android:id="@+id/sp_formapag_registerreceita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_formapag_registerreceita"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp" />
 
             <Button
                 android:id="@+id/btn_cadastrar_registerreceita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/cadastrar"
+                android:layout_below="@id/sp_formapag_registerreceita"
                 android:layout_marginTop="10dp"
-                android:layout_below="@id/sp_formapag_registerreceita"/>
+                android:text="@string/cadastrar" />
 
         </RelativeLayout>
     </ScrollView>
