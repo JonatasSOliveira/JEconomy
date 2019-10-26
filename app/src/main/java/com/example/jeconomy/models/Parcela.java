@@ -38,4 +38,12 @@ public class Parcela extends SugarRecord {
     public Despesa getDespesa() {
         return despesa;
     }
+
+    public Date getDataPag() {
+        return dataPag;
+    }
+
+    public Date getDataVenc() {
+        return dataVenc;
+    }
 }

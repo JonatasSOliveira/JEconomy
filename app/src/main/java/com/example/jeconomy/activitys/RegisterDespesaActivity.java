@@ -160,6 +160,9 @@ public class RegisterDespesaActivity extends AppCompatActivity implements DatePi
                         Despesa despesa = new Despesa(valor, obs, qtdeParcelas, categoria, user);
 
                         if (swPaga.isChecked()) {
+                            if(qtdeParcelas == 1){
+                                despesa.setPago(true);
+                            }
                             Parcela parcela = new Parcela(date, null, 1, save(despesa));
                             FormaPagamento formaPag = new FormaPagamento(valor, save(parcela));
                             if (formaPagItem == 1) {

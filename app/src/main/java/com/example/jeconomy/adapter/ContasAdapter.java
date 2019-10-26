@@ -12,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jeconomy.R;
 import com.example.jeconomy.models.Despesa;
+import com.example.jeconomy.models.Parcela;
 import com.example.jeconomy.models.Receita;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
+import java.text.DateFormat;
 import java.util.List;
 
 public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHolder> {
@@ -56,12 +60,15 @@ public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHold
         if (listDespesa != null) {
             holder.tvCategoria.setText(listDespesa.get(position).getCategoria().getNome());
             String date;
+            List<Parcela> listParcela = Select.from(Parcela.class).where(Condition.prop("DESPESA").eq(listDespesa.get(position))).list();
+            Parcela parcela = listParcela.get(listParcela.size() - 1);
+
             if (listDespesa.get(position).isPago()) {
-                //date = DateFormat.getDateInstance(DateFormat.SHORT).format(listDespesa.get(position).getDataPag());
-                //holder.tvData.setText(date);
+                date = DateFormat.getDateInstance(DateFormat.SHORT).format(parcela.getDataPag());
+                holder.tvData.setText(date);
             } else {
-                //date = DateFormat.getDateInstance(DateFormat.SHORT).format(listDespesa.get(position).getDataVenc());
-                //holder.tvData.setText(date);
+                date = DateFormat.getDateInstance(DateFormat.SHORT).format(parcela.getDataVenc());
+                holder.tvData.setText(date);
             }
             holder.btnVisualizar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,12 +79,15 @@ public class ContasAdapter extends RecyclerView.Adapter<ContasAdapter.MyViewHold
         } else {
             holder.tvCategoria.setText(listReceita.get(position).getCategoria().getNome());
             String date;
+            List<Parcela> listParcela = Select.from(Parcela.class).where(Condition.prop("RECEITA").eq(listReceita.get(position))).list();
+            Parcela parcela = listParcela.get(listParcela.size() - 1);
+
             if (listReceita.get(position).isPago()) {
-                //date = DateFormat.getDateInstance(DateFormat.SHORT).format(listReceita.get(position).getDataPag());
-                //holder.tvData.setText(date);
+                date = DateFormat.getDateInstance(DateFormat.SHORT).format(parcela.getDataPag());
+                holder.tvData.setText(date);
             } else {
-                //date = DateFormat.getDateInstance(DateFormat.SHORT).format(listReceita.get(position).getDataVenc());
-                //holder.tvData.setText(date);
+                date = DateFormat.getDateInstance(DateFormat.SHORT).format(parcela.getDataVenc());
+                holder.tvData.setText(date);
             }
             holder.btnVisualizar.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jeconomy.R;
 import com.example.jeconomy.adapter.ContasAdapter;
@@ -37,7 +38,7 @@ public class DespesaFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public DespesaFragment(Usuario user, long id){
+    public DespesaFragment(Usuario user, long id) {
         this.user = user;
         user.setId(id);
     }
@@ -83,18 +84,11 @@ public class DespesaFragment extends Fragment {
 
     private void updateRecycleView(int isPago) {
         try {
-            String order;
-            if (isPago == 1) {
-                order = "data_pag Desc";
-            } else {
-                order = "data_venc Desc";
-            }
-
             SugarContext.init(getContext());
 
             listDespesa = Select.from(Despesa.class).where(Condition.prop("is_pago").eq(isPago),
-                    Condition.prop("usuario").eq(user.getId())).orderBy(order).list();
-            SugarContext.terminate();
+                    Condition.prop("usuario").eq(user.getId())).list();
+
             if (listDespesa != null) {
                 ContasAdapter adapter = new ContasAdapter(getContext(), listDespesa, 'D');
                 adapter.setControlConta(new ContasAdapter.ControlConta() {

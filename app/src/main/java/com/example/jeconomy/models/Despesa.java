@@ -36,4 +36,7 @@ public class Despesa extends SugarRecord implements Serializable {
         return categoria;
     }
 
+    public void setPago(boolean pago) {
+        isPago = pago;
+    }
 }
