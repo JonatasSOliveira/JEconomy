@@ -77,17 +77,10 @@ public class ReceitaFragment extends Fragment {
 
     private void updateRecycleView(int isPago) {
         try {
-            String order;
-            if (isPago == 1) {
-                order = "data_pag Desc";
-            } else {
-                order = "data_venc Desc";
-            }
 
             SugarContext.init(getContext());
             listReceita = Select.from(Receita.class).where(Condition.prop("is_pago").eq(isPago),
-                    Condition.prop("usuario").eq(user.getId())).orderBy(order).list();
-            SugarContext.terminate();
+                    Condition.prop("usuario").eq(user.getId())).list();
             if (listReceita != null) {
                 ContasAdapter adapter = new ContasAdapter(getContext(), listReceita, 'R');
                 adapter.setControlConta(new ContasAdapter.ControlConta() {
